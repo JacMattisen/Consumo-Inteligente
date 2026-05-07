@@ -1,73 +1,54 @@
-# React + TypeScript + Vite
+# 💰 Consumo Inteligente 50-30-20
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+O **Consumo Inteligente** é um dashboard de gestão financeira pessoal que aplica automaticamente o método **50-30-20**. Diferente de uma simples lista de gastos, o sistema educa o usuário sobre sua saúde financeira, distribuindo rendas e despesas em pilares estratégicos.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Funcionalidades
 
-## React Compiler
+- **Gestão de Rendas:** Cadastro de salário e rendas extras para cálculo dinâmico de orçamento.
+- **Lançamento de Gastos:** Cadastro de despesas com categorização inteligente vinculada à regra financeira.
+- **Insights 50-30-20:** Painel que monitora em tempo real se você está dentro dos limites:
+  - **50% (Essenciais):** Moradia, saúde e alimentação.
+  - **30% (Estilo de Vida):** Lazer, hobbies e desejos.
+  - **20% (Futuro):** Reserva de emergência e investimentos (calculado com base no saldo restante).
+- **Gráfico de Evolução:** Visualização clara da distribuição dos gastos através de gráficos de rosca dinâmicos.
+- **Extrato Inteligente:** Lista de gastos com indicadores visuais por pilar.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tecnologias Utilizadas
 
-## Expanding the ESLint configuration
+- **React.js** (com TypeScript)
+- **Tailwind CSS** (Estilização responsiva e tema Dark)
+- **Lucide React** (Ícones)
+- **Recharts** (Visualização de dados)
+- **MockAPI** (Persistência de dados em nuvem)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📈 O Método 50-30-20
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+O projeto foi construído para reforçar uma metodologia de sucesso mundial:
+1. **Necessidades (50%):** O que você precisa para viver.
+2. **Desejos Pessoais (30%):** O que você quer para o seu bem-estar.
+3. **Dívidas e Poupança (20%):** O que você reserva para o seu "eu" do futuro.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 💻 Como Rodar o Projeto
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. **Clone o repositório:**
+   ```bash
+   git clone [https://github.com/seu-usuario/consumoInteligente.git](https://github.com/seu-usuario/consumoInteligente.git)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+2. **Instale as dependências:**
+
+Bash
+   npm install
+3. **Inicie o projeto:**
+
+Bash
+npm run dev
+
+---
+
+Este projeto foi desenvolvido como parte de um Hackathon pela AdaTech
