@@ -2,34 +2,36 @@ import { useState } from "react";
 import { categorias } from "../constantes/categorias";
 import { criarGasto } from "../service/consumo";
 
-
 export function FormGasto() {
-
   const [descricao, setDescricao] = useState<string>("");
   const [valor, setValor] = useState<number>(0);
   const [categoria, setCategoria] = useState<string>("1");
 
-  const handleSubmit = async (e: React.ChangeEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-      console.log("clicou submit");
 
-     const novoGasto = {
+    // Verificação para não enviar vazio
+    if (!descricao || valor <= 0) {
+      alert("Preencha a descrição e o valor!");
+      return;
+    }
+
+    const novoGasto = {
       descricao,
       valor,
       categoria,
-      dataCriacao: Date.now()
+      dataCriacao: Date.now(),
     };
-    
+
     try {
-      await criarGasto(novoGasto); // chama o POST
+      await criarGasto(novoGasto);
 
-      console.log("Gasto criado com sucesso");
-
-      // limpa o form
+      // Limpa o formulário
       setDescricao("");
       setValor(0);
       setCategoria("1");
 
+      window.location.reload();
     } catch (error) {
       console.error("Erro ao criar gasto", error);
     }
@@ -37,35 +39,39 @@ export function FormGasto() {
 
   return (
     <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-        
       <input
-        className="bg-white text-black p-2 rounded border border-gray-300 mb-4 ..."
-        placeholder="Descrição"
+        className="bg-white text-black p-2 rounded border border-gray-300 w-full"
+        placeholder="Descrição (ex: Aluguel)"
         value={descricao}
         onChange={(e) => setDescricao(e.target.value)}
       />
 
       <input
-        className="bg-white text-black p-2 rounded border border-gray-300 mb-4 ..."
-        value={valor}
+        type="number"
+        className="bg-white text-black p-2 rounded border border-gray-300 w-1/2"
+        placeholder="Valor"
+        value={valor || ""}
         onChange={(e) => setValor(Number(e.target.value))}
       />
 
       <select
-      className="bg-white text-black p-2 rounded border border-gray-300"
+        className="bg-white text-black p-2 rounded border border-gray-300 w-1/2"
         value={categoria}
         onChange={(e) => setCategoria(e.target.value)}
       >
-        {categorias.map(cat => (
+        {categorias.map((cat) => (
           <option key={cat.id} value={cat.id}>
             {cat.descricao}
           </option>
         ))}
       </select>
 
-      <button type="submit" 
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
-        Adicionar</button>
+      <button
+        type="submit"
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition w-1/2 font-bold"
+      >
+        Adicionar Gasto
+      </button>
     </form>
   );
 }

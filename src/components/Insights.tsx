@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { getGastos, getRendimentos } from "../service/consumo";
-import { categorias } from "../constantes/categorias";
 import type { Gasto, Rendimento } from "../tipos/tipos";
 
 export function Insights() {
   const [gastos, setGastos] = useState<Gasto[]>([]);
   const [rendimentos, setRendimentos] = useState<Rendimento[]>([]);
 
-  // Qdo a tela abrir os dados da API sao carregados - eu espero os gastos, depois espero os rendimentos
   useEffect(() => {
     async function carregarDados() {
       const g = await getGastos();
@@ -18,76 +16,185 @@ export function Insights() {
     carregarDados();
   }, []);
 
-  // 1. Soma o total de dinheiro que entrou
   const totalRecebido = rendimentos.reduce(
     (soma, item) => soma + item.valor,
     0,
   );
 
+  // --- LÓGICA DA REGRA 50-30-20 ---
+  const totalEssenciais = gastos
+    .filter((g) => ["1", "3", "4"].includes(g.categoria)) // IDs: 1-Alimentação, 3-Saúde, 4-Contas
+    .reduce((soma, g) => soma + g.valor, 0); // Soma total dos gastos essenciais
+
+  const totalDesejos = gastos
+    .filter((g) => ["2", "5"].includes(g.categoria))
+    .reduce((soma, g) => soma + g.valor, 0);
+
+  const saldoAtualParaOFuturo =
+    totalRecebido - (totalEssenciais + totalDesejos);
+
+  const limite50 = totalRecebido * 0.5;
+  const limite30 = totalRecebido * 0.3;
+  const meta20 = totalRecebido * 0.2;
+
   return (
-    <div
-      style={{
-        padding: "20px",
-        backgroundColor: "#1a1a1a",
-        borderRadius: "10px",
-      }}
-    >
-      <h2 style={{ color: "#fff", marginBottom: "20px" }}>
-        💡 Insights de Gastos
+    <div className="p-5 bg-[#1a1a1a] rounded-xl shadow-lg space-y-6">
+      <h2 className="text-white text-xl font-bold flex items-center gap-2">
+        💡 50-30-20
       </h2>
 
       {totalRecebido === 0 ? (
-        <p style={{ color: "#888" }}>Cadastre sua renda para ver os limites.</p>
+        <p className="text-gray-500 italic">
+          Cadastre sua renda para organizar seus pilares financeiros.
+        </p>
       ) : (
-        categorias.map((cat) => {
-          // 2. Soma quanto gastou
-          const totalGastoNaCategoria = gastos
-            .filter((g) => g.categoria === cat.id)
-            .reduce((soma, g) => soma + g.valor, 0);
-
-          // 3. Calcula o limite em Reais (Ex: 5000 * 0.5 (50%)
-          const limiteEmReais = totalRecebido * cat.limite;
-
-          // 4. Verifica se passou do limite
-          const estourou = totalGastoNaCategoria > limiteEmReais;
-
-          return (
+        <>
+          <div className="space-y-4">
+            {/* GRUPO 50% - NECESSIDADES */}
             <div
-              key={cat.id}
+              className="p-4 bg-[#2a2a2a] rounded-lg border-l-4"
               style={{
-                marginBottom: "15px",
-                padding: "10px",
-                borderLeft: `5px solid ${estourou ? "red" : "green"}`,
-                backgroundColor: "#2a2a2a",
+                borderLeftColor:
+                  totalEssenciais > limite50 ? "#ff4d4d" : "#3b82f6",
               }}
             >
-              <h4 style={{ color: "#ddd", margin: 0 }}>{cat.descricao}</h4>
-
+              <h4 className="text-gray-300 font-semibold text-sm">
+                🏠 Essenciais (50%)
+              </h4>
               <p
+                className="text-base"
                 style={{
-                  color: estourou ? "#ff4d4d" : "#4dff4d",
-                  fontSize: "14px",
+                  color: totalEssenciais > limite50 ? "#ff4d4d" : "#4dff4d",
                 }}
               >
-                {totalGastoNaCategoria.toLocaleString("pt-BR", {
+                {totalEssenciais.toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}
-                <span style={{ color: "#888" }}> de um limite de </span>
-                {limiteEmReais.toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
+                <span className="text-gray-500 text-xs italic ml-1">
+                  / limite de{" "}
+                  {limite50.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
+                </span>
               </p>
-
-              {estourou && (
-                <small style={{ color: "#ff4d4d", fontWeight: "bold" }}>
-                  ⚠️ Atenção: Você passou do limite sugerido!
-                </small>
+              {totalEssenciais > limite50 && (
+                <p className="text-[10px] text-[#ff4d4d] font-bold mt-1">
+                  ⚠️ Reduza gastos básicos!
+                </p>
               )}
             </div>
-          );
-        })
+
+            {/* GRUPO 30% - DESEJOS */}
+            <div
+              className="p-4 bg-[#2a2a2a] rounded-lg border-l-4"
+              style={{
+                borderLeftColor:
+                  totalDesejos > limite30 ? "#eab308" : "#ec4899",
+              }}
+            >
+              <h4 className="text-gray-300 font-semibold text-sm">
+                🎉 Estilo de Vida (30%)
+              </h4>
+              <p
+                className="text-base"
+                style={{
+                  color: totalDesejos > limite30 ? "#eab308" : "#4dff4d",
+                }}
+              >
+                {totalDesejos.toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+                <span className="text-gray-500 text-xs italic ml-1">
+                  / limite de{" "}
+                  {limite30.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
+                </span>
+              </p>
+              {totalDesejos > limite30 && (
+                <p className="text-[10px] text-[#eab308] font-bold mt-1">
+                  ⚠️ Controle seus desejos momentâneos!
+                </p>
+              )}
+            </div>
+
+            {/* GRUPO 20% - FUTURO */}
+            <div
+              className="p-4 bg-[#2a2a2a] rounded-lg border-l-4"
+              style={{
+                borderLeftColor:
+                  saldoAtualParaOFuturo < meta20 ? "#ff8c00" : "#22c55e",
+              }}
+            >
+              <h4 className="text-gray-300 font-semibold text-sm">
+                🚀 Futuro e Reserva (20%)
+              </h4>
+              <p
+                className="text-base"
+                style={{
+                  color: saldoAtualParaOFuturo < meta20 ? "#ff8c00" : "#4dff4d",
+                }}
+              >
+                {saldoAtualParaOFuturo.toLocaleString("pt-BR", {
+                  style: "currency",
+                  currency: "BRL",
+                })}
+                <span className="text-gray-500 text-xs italic ml-1">
+                  / meta de{" "}
+                  {meta20.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
+                </span>
+              </p>
+              <p
+                className="text-[10px] font-bold mt-1"
+                style={{
+                  color:
+                    saldoAtualParaOFuturo >= meta20 ? "#4dff4d" : "#ff8c00",
+                }}
+              >
+                {saldoAtualParaOFuturo >= meta20
+                  ? "✅ No caminho certo para a liberdade!"
+                  : "📉 Tente poupar um pouco mais."}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-6 pt-4 border-t border-slate-700 space-y-3">
+            <h3 className="text-white text-xs font-bold uppercase tracking-wider text-center opacity-70">
+              Entenda o Método
+            </h3>
+
+            <div className="space-y-2 text-[11px] leading-relaxed">
+              <p className="text-gray-400">
+                <strong className="text-blue-400">
+                  50% - Necessidades (Gastos Essenciais):
+                </strong>{" "}
+                Moradia (aluguel/condomínio), conta de luz, água, gás,
+                supermercado, transporte, plano de saúde e educação.
+              </p>
+              <p className="text-gray-400">
+                <strong className="text-pink-400">
+                  30% - Desejos (Gastos Variáveis):
+                </strong>{" "}
+                Assinaturas (Netflix, Spotify), restaurantes, salão de beleza,
+                compras não essenciais, viagens e hobbies.
+              </p>
+              <p className="text-gray-400">
+                <strong className="text-green-400">
+                  20% - Futuro (Prioridades):
+                </strong>{" "}
+                Reserva de emergência, pagamento de dívidas, aportes em
+                investimentos (ações, tesouro direto, previdência).
+              </p>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
