@@ -17,6 +17,12 @@ export function ListaGastos({gastos,
       return { label: "Essencial", color: "text-blue-400", dot: "bg-blue-400" };
     if (["2", "5"].includes(catId))
       return { label: "Desejo", color: "text-pink-400", dot: "bg-pink-400" };
+    if (catId === "6")
+      return {
+        label: "Investimento",
+        color: "text-green-400",
+        dot: "bg-green-400",
+      };
     return { label: "Outro", color: "text-slate-400", dot: "bg-slate-400" };
   };
 
@@ -48,7 +54,7 @@ export function ListaGastos({gastos,
 
   return (
     <div className="w-full h-full flex flex-col space-y-4">
-      <h3 className="font-bold border-b border-slate-700 pb-2 text-white flex justify-between items-center">
+      <h3 className="font-bold border-b border-slate-700 pb-2 text-primary flex justify-between items-center">
         Extrato de Gastos
       </h3>
 
@@ -72,7 +78,7 @@ export function ListaGastos({gastos,
                   />
 
                   <div>
-                    <p className="font-medium text-gray-200 text-sm">
+                    <p className="font-medium text-primary text-sm">
                       {g.descricao}
                     </p>
                     <div className="flex gap-2 items-center">

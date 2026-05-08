@@ -17,16 +17,14 @@ export function Navbar() {
 
   return (
     <nav className="flex justify-between items-center p-4 border-b border-slate-700 shadow-md">
-      {/* Esquerda: Logo */}
+      {/* Logo */}
       <div className="flex items-center gap-2 text-blue-500">
-        {/* <LayoutDashboard size={28} /> */}
-        <Brain size={28}/>
-        <span className="text-white px-3 py-1 font-size:20px">
+        <Brain size={28} />
+        <span className="text-primary px-3 py-1 font-size:20px">
           Consumo Inteligente
         </span>
       </div>
 
-      {/* Direita: Ações */}
       <div className="flex items-center gap-10">
         {/* Sub-grupo: Utilidades (Notificações e Configurações) */}
         <div className="flex items-center gap-6 pr-4 border-r border-slate-600">

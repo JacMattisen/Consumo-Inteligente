@@ -1,11 +1,7 @@
 import type { Rendimento } from "../tipos/tipos";
+
 import { atualizarRenda, deletarRenda} from "../service/consumo";
 import { Edit, Trash2 } from "lucide-react";
-
-// interface ListaRendimentosProps {
-//   rendimentos: Rendimento[];
-//   carregarDadosRendimentos: () => Promise<void>;
-// }
 
 interface ListaRendimentosProps {
   rendimentos: Rendimento[];
@@ -42,7 +38,7 @@ export function ListaRendimentos({
 
   return (
     <div className="w-full h-full flex flex-col space-y-4">
-      <h3 className="font-bold border-b border-slate-700 pb-2 text-white flex justify-between items-center">
+      <h3 className="font-bold border-b border-slate-700 pb-2 text-primary flex justify-between items-center">
         Rendimentos fixos e variáveis
       </h3>
 
@@ -53,27 +49,25 @@ export function ListaRendimentos({
       ) : (
         <div className="space-y-2 overflow-y-auto flex-1 pr-2 custom-scrollbar">
           {rendimentos.map((r) => {
-
             return (
               <div
                 key={r.id}
-                className="flex justify-between items-center p-3 bg-slate-800/20 rounded-lg border border-slate-700/50 hover:bg-slate-800/40 transition-colors"
+                className="flex justify-between items-center p-3 bg-slate-800/20 rounded-lg border border-slate-700/50 hover:bg-slate-800/30 transition-colors"
               >
-                
-             <div>
-                <p className="font-medium text-gray-200 text-sm">
+                <div>
+                  <p className="font-medium text-white-300 text-sm">
                     {r.descricao}
-                </p>
+                  </p>
 
-                <span className="text-xs text-green-400 font-bold">
+                  <span className="text-xs text-green-700 font-bold">
                     R$ {r.valor.toFixed(2)}
-                </span>
-              </div>
+                  </span>
+                </div>
 
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleEdit(r.id)}
-                    className="text-slate-500 hover:text-yellow-500 transition p-1"
+                    className="text-white-500 hover:text-yellow-500 transition p-1"
                     title="Editar valor"
                   >
                     <Edit size={16} />
@@ -81,7 +75,7 @@ export function ListaRendimentos({
 
                   <button
                     onClick={() => handleDelete(r.id)}
-                    className="text-slate-500 hover:text-red-500 transition p-1"
+                    className="text-white-500 hover:text-red-500 transition p-1"
                     title="Excluir"
                   >
                     <Trash2 size={16} />
@@ -95,5 +89,3 @@ export function ListaRendimentos({
     </div>
   );
 }
-
-

@@ -6,4 +6,5 @@ export const categorias: Categoria[] = [
   { id: "3", descricao: "Saúde (Essencial)", limite: 0.5 }, // 50%
   { id: "4", descricao: "Contas mensais (Essencial)", limite: 0.5 }, // 50%
   { id: "5", descricao: "Outros (Desejo)", limite: 0.3 }, // 30%
+  { id: "6", descricao: "Poupança (Desejo)", limite: 0.2 }, // 20%
 ];

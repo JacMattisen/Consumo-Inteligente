@@ -46,25 +46,21 @@ export function FormRendimentos({
       <div className="flex flex-col gap-2">
         {/* Select para escolher o tipo de renda */}
         <select
-          className= {`
+          className={`
             bg-white text-black p-2 rounded border border-gray-300 w-full
             ${descricao === "" ? "text-gray-400" : "text-black"}
             `}
           value={descricao}
           onChange={(e) => setDescricao(e.target.value)}
         >
-
-          <option
-            value=""
-            disabled
-            hidden
-          >
+          <option value="" disabled hidden>
             Selecione a categoria de rendimento
           </option>
 
           <option value="Salário">Salário</option>
           <option value="Renda Extra">Renda Extra</option>
           <option value="Investimentos">Rendimentos</option>
+          <option value="Reserva/Poupança">Reserva/Poupança</option>
           <option value="Outros">Outros</option>
         </select>
 
@@ -85,7 +81,7 @@ export function FormRendimentos({
         Adicionar Renda
       </button>
 
-      <p className="text-[10px] text-gray-500 italic">
+      <p className="text-[10px] text-gray-700 italic">
         * A soma das rendas define seus limites de 50%, 30% e 20%.
       </p>
     </form>

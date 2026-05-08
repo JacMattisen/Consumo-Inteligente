@@ -10,7 +10,7 @@ import {
 import { getGastos } from "../service/consumo";
 
 // Cores
-const COLORS = ["#3b82f6", "#ec4899", "#eab308"]; // Azul (Essencial), Rosa (Desejos), Amarelo (Reserva)
+const COLORS = ["#3b82f6", "#ec4899", "#eab308"]; // Essencial, Desejos, Reserva
 
 export function GraficoConsumo() {
   const [dadosGrafico, setDadosGrafico] = useState<
@@ -44,10 +44,16 @@ export function GraficoConsumo() {
         .filter((g) => ["2", "5"].includes(g.categoria))
         .reduce((soma, g) => soma + g.valor, 0);
 
-      // Criar a estrutura para o gráfico
+      // ID: 6 - Poupança/Investimentos
+      const totalReserva = gastosApi
+        .filter((g) => g.categoria === "6")
+        .reduce((soma, g) => soma + g.valor, 0);
+
+      // gráfico
       const novosDados = [
         { name: "Essenciais (50%)", value: totalEssenciais },
         { name: "Desejos (30%)", value: totalDesejos },
+        { name: "Reserva (20%)", value: totalReserva },
       ];
 
       // Filtra grupos que não possuem gastos ainda para não bugar o gráfico
@@ -64,12 +70,12 @@ export function GraficoConsumo() {
       {/* maior gasto individual */}
       {maiorGasto && (
         <div className="mb-4 p-2 bg-slate-800/50 rounded-lg border border-slate-700 text-center w-full">
-          <p className="text-[10px] uppercase tracking-wider text-slate-400">
+          <p className="text-[10px] uppercase tracking-wider text-primary">
             Maior Gasto Detectado
           </p>
           <p className="text-sm font-bold text-white">
             {maiorGasto.descricao}:{" "}
-            <span className="text-red-400">
+            <span className="text-red-600">
               {maiorGasto.valor.toLocaleString("pt-BR", {
                 style: "currency",
                 currency: "BRL",

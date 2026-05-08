@@ -41,12 +41,11 @@ export function Insights() {
   return (
     <div className="p-5 bg-[#1a1a1a] rounded-xl shadow-lg space-y-6">
       <div className="flex items-center gap-2">
-        <Lightbulb size={20}/>
+        <Lightbulb size={20} className="text-gray-300" />
         <h2 className="text-white text-xl font-bold flex items-center gap-2">
           50-30-20
         </h2>
       </div>
-      
 
       {totalRecebido === 0 ? (
         <p className="text-gray-500 italic">
@@ -64,12 +63,12 @@ export function Insights() {
               }}
             >
               <div className="flex items-center gap-2">
-                <House size={20}/>
+                <House size={20} className="text-gray-300" />
                 <h4 className="text-gray-300 font-semibold text-sm">
                   Essenciais (50%)
                 </h4>
               </div>
-              
+
               <p
                 className="text-base"
                 style={{
@@ -103,14 +102,13 @@ export function Insights() {
                   totalDesejos > limite30 ? "#eab308" : "#ec4899",
               }}
             >
-
               <div className="flex items-center gap-2">
-                <ChessQueen size={20}/>
+                <ChessQueen size={20} className="text-gray-300" />
                 <h4 className="text-gray-300 font-semibold text-sm">
                   Estilo de Vida (30%)
-              </h4>
+                </h4>
               </div>
-              
+
               <p
                 className="text-base"
                 style={{
@@ -145,12 +143,12 @@ export function Insights() {
               }}
             >
               <div className="flex items-center gap-2">
-                <PiggyBank size={20}/>
+                <PiggyBank size={20} className="text-gray-300" />
                 <h4 className="text-gray-300 font-semibold text-sm">
-                Futuro e Reserva (20%)
-              </h4>
+                  Futuro e Reserva (20%)
+                </h4>
               </div>
-              
+
               <p
                 className="text-base"
                 style={{
