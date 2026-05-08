@@ -56,7 +56,7 @@ export function ListaGastos() {
   };
 
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full h-full flex flex-col space-y-4">
       <h3 className="font-bold border-b border-slate-700 pb-2 text-white flex justify-between items-center">
         Extrato de Gastos
       </h3>
@@ -66,7 +66,7 @@ export function ListaGastos() {
           Nenhum gasto encontrado.
         </p>
       ) : (
-        <div className="space-y-2 overflow-y-auto max-h-100 pr-2 custom-scrollbar">
+        <div className="space-y-2 overflow-y-auto flex-1 pr-2 custom-scrollbar">
           {gastos.map((g) => {
             const style = getCategoriaStyle(g.categoria);
             return (

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getGastos, getRendimentos } from "../service/consumo";
 import type { Gasto, Rendimento } from "../tipos/tipos";
+import { ChessQueen, House, Lightbulb, PiggyBank } from "lucide-react";
 
 export function Insights() {
   const [gastos, setGastos] = useState<Gasto[]>([]);
@@ -39,9 +40,13 @@ export function Insights() {
 
   return (
     <div className="p-5 bg-[#1a1a1a] rounded-xl shadow-lg space-y-6">
-      <h2 className="text-white text-xl font-bold flex items-center gap-2">
-        💡 50-30-20
-      </h2>
+      <div className="flex items-center gap-2">
+        <Lightbulb size={20}/>
+        <h2 className="text-white text-xl font-bold flex items-center gap-2">
+          50-30-20
+        </h2>
+      </div>
+      
 
       {totalRecebido === 0 ? (
         <p className="text-gray-500 italic">
@@ -58,9 +63,13 @@ export function Insights() {
                   totalEssenciais > limite50 ? "#ff4d4d" : "#3b82f6",
               }}
             >
-              <h4 className="text-gray-300 font-semibold text-sm">
-                🏠 Essenciais (50%)
-              </h4>
+              <div className="flex items-center gap-2">
+                <House size={20}/>
+                <h4 className="text-gray-300 font-semibold text-sm">
+                  Essenciais (50%)
+                </h4>
+              </div>
+              
               <p
                 className="text-base"
                 style={{
@@ -94,9 +103,14 @@ export function Insights() {
                   totalDesejos > limite30 ? "#eab308" : "#ec4899",
               }}
             >
-              <h4 className="text-gray-300 font-semibold text-sm">
-                🎉 Estilo de Vida (30%)
+
+              <div className="flex items-center gap-2">
+                <ChessQueen size={20}/>
+                <h4 className="text-gray-300 font-semibold text-sm">
+                  Estilo de Vida (30%)
               </h4>
+              </div>
+              
               <p
                 className="text-base"
                 style={{
@@ -130,9 +144,13 @@ export function Insights() {
                   saldoAtualParaOFuturo < meta20 ? "#ff8c00" : "#22c55e",
               }}
             >
-              <h4 className="text-gray-300 font-semibold text-sm">
-                🚀 Futuro e Reserva (20%)
+              <div className="flex items-center gap-2">
+                <PiggyBank size={20}/>
+                <h4 className="text-gray-300 font-semibold text-sm">
+                Futuro e Reserva (20%)
               </h4>
+              </div>
+              
               <p
                 className="text-base"
                 style={{

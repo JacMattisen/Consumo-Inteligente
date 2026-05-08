@@ -5,9 +5,9 @@ import { criarGasto } from "../service/consumo";
 export function FormGasto() {
   const [descricao, setDescricao] = useState<string>("");
   const [valor, setValor] = useState<number>(0);
-  const [categoria, setCategoria] = useState<string>("1");
+  const [categoria, setCategoria] = useState<string>("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
 
     // Verificação para não enviar vazio
@@ -39,6 +39,8 @@ export function FormGasto() {
 
   return (
     <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+      
+    {/* DESCRIÇÃO */}
       <input
         className="bg-white text-black p-2 rounded border border-gray-300 w-full"
         placeholder="Descrição (ex: Aluguel)"
@@ -46,29 +48,46 @@ export function FormGasto() {
         onChange={(e) => setDescricao(e.target.value)}
       />
 
-      <input
-        type="number"
-        className="bg-white text-black p-2 rounded border border-gray-300 w-1/2"
-        placeholder="Valor"
-        value={valor || ""}
-        onChange={(e) => setValor(Number(e.target.value))}
-      />
+    {/* LINHA 2 */}
+    <div className="flex gap-2">
+        <input
+          type="number"
+          className="bg-white text-black p-2 rounded border border-gray-300 w-1/2"
+          placeholder="Valor (R$)"
+          value={valor || ""}
+          onChange={(e) => setValor(Number(e.target.value))}
+        />
 
-      <select
-        className="bg-white text-black p-2 rounded border border-gray-300 w-1/2"
-        value={categoria}
-        onChange={(e) => setCategoria(e.target.value)}
-      >
-        {categorias.map((cat) => (
-          <option key={cat.id} value={cat.id}>
-            {cat.descricao}
+        <select
+          className={ `
+              bg-white text-black p-2 rounded border border-gray-300 w-1/2 
+              ${categoria === "" ? "text-gray-400" : "text-black"}
+            `}
+          value={categoria}
+          onChange={(e) => setCategoria(e.target.value)}
+        >
+
+          <option
+            value=""
+            disabled
+            hidden
+          >
+            Selecione uma categoria
           </option>
-        ))}
-      </select>
+
+          {categorias.map((cat) => (
+            <option 
+              key={cat.id} 
+              value={cat.id}>
+              {cat.descricao}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <button
         type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition w-1/2 font-bold"
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition w-full font-bold"
       >
         Adicionar Gasto
       </button>

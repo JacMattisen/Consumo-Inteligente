@@ -2,7 +2,7 @@ import { useState } from "react";
 import { criarRendimento } from "../service/consumo";
 
 export function FormRendimentos() {
-  const [descricao, setDescricao] = useState<string>("Salário");
+  const [descricao, setDescricao] = useState<string>("");
   const [valor, setValor] = useState<number>(0);
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -34,13 +34,25 @@ export function FormRendimentos() {
 
   return (
     <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-      <div className="flex gap-2">
+      <div className="flex flex-col gap-2">
         {/* Select para escolher o tipo de renda */}
         <select
-          className="bg-white text-black p-2 rounded border border-gray-300 w-1/2"
+          className= {`
+            bg-white text-black p-2 rounded border border-gray-300 w-full
+            ${descricao === "" ? "text-gray-400" : "text-black"}
+            `}
           value={descricao}
           onChange={(e) => setDescricao(e.target.value)}
         >
+
+          <option
+            value=""
+            disabled
+            hidden
+          >
+            Selecione a categoria de rendimento
+          </option>
+
           <option value="Salário">Salário</option>
           <option value="Renda Extra">Renda Extra</option>
           <option value="Investimentos">Rendimentos</option>
@@ -50,7 +62,7 @@ export function FormRendimentos() {
         {/* Input de Valor */}
         <input
           type="number"
-          className="bg-white text-black p-2 rounded border border-gray-300 w-1/2"
+          className="bg-white text-black p-2 rounded border border-gray-300 w-full"
           placeholder="Valor (R$)"
           value={valor || ""}
           onChange={(e) => setValor(Number(e.target.value))}
@@ -59,7 +71,7 @@ export function FormRendimentos() {
 
       <button
         type="submit"
-        className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition w-1/2 font-bold"
+        className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition w-full font-bold"
       >
         Adicionar Renda
       </button>

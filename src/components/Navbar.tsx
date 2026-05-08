@@ -1,4 +1,4 @@
-import { Sun, Moon, User, LayoutDashboard, Bell, Settings } from "lucide-react";
+import { Sun, Moon, User, Bell, Settings, Brain } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -19,8 +19,9 @@ export function Navbar() {
     <nav className="flex justify-between items-center p-4 border-b border-slate-700 shadow-md">
       {/* Esquerda: Logo */}
       <div className="flex items-center gap-2 text-blue-500">
-        <LayoutDashboard size={28} />
-        <span className="bg-blue-500 text-white px-3 py-1 rounded-full">
+        {/* <LayoutDashboard size={28} /> */}
+        <Brain size={28}/>
+        <span className="text-white px-3 py-1 font-size:20px">
           Consumo Inteligente
         </span>
       </div>
