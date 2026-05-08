@@ -2,12 +2,19 @@ import { useState } from "react";
 import { categorias } from "../constantes/categorias";
 import { criarGasto } from "../service/consumo";
 
-export function FormGasto() {
+interface FormGastoProps {
+  onGastoCriado: () => Promise<void>;
+}
+
+export function FormGasto({
+  onGastoCriado
+}: FormGastoProps) {
+
   const [descricao, setDescricao] = useState<string>("");
   const [valor, setValor] = useState<number>(0);
   const [categoria, setCategoria] = useState<string>("");
 
-  const handleSubmit = async (e: React.SubmitEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Verificação para não enviar vazio
@@ -24,14 +31,15 @@ export function FormGasto() {
     };
 
     try {
-      await criarGasto(novoGasto);
+      await criarGasto(novoGasto); //Chama POST de gastos
+      await onGastoCriado();
+      alert("Gasto adicionado com sucesso!")
 
       // Limpa o formulário
       setDescricao("");
       setValor(0);
       setCategoria("");
 
-      window.location.reload();
     } catch (error) {
       console.error("Erro ao criar gasto", error);
     }

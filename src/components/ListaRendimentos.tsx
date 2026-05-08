@@ -1,31 +1,17 @@
-import { useEffect, useState, useCallback } from "react";
 import type { Rendimento } from "../tipos/tipos";
-import {
-  atualizarRenda,
-  deletarRenda,
-  getRendimentos,
-} from "../service/consumo";
+
+import { atualizarRenda, deletarRenda} from "../service/consumo";
 import { Edit, Trash2 } from "lucide-react";
 
-export function ListaRendimentos() {
-  const [rendimentos, setRendimentos] = useState<Rendimento[]>([]);
+interface ListaRendimentosProps {
+  rendimentos: Rendimento[];
+  carregarDados: () => Promise<void>;
+}
 
-  const carregarDados = useCallback(async () => {
-    try {
-      const dados = await getRendimentos();
-      setRendimentos(dados);
-    } catch (err) {
-      console.error("Erro ao buscar rendimento:", err);
-    }
-  }, []);
-
-  useEffect(() => {
-    const buscarDadosIniciais = async () => {
-      await carregarDados();
-    };
-
-    buscarDadosIniciais();
-  }, [carregarDados]);
+export function ListaRendimentos({
+  rendimentos,
+  carregarDados
+}: ListaRendimentosProps) {
 
   const handleDelete = async (id: string) => {
     if (window.confirm("Deseja apagar esta renda?")) {

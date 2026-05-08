@@ -43,6 +43,8 @@ export const atualizarRenda = async (
     throw new Error(`Erro ao atualizar renda: ${res.status}`);
   }
 
+  alert("Renda alterada com sucesso!")
+
   return res.json();
 };
 
@@ -75,6 +77,7 @@ export const getGastos = async (): Promise<Gasto[]> => {
   const res = await fetch(`${BASE_URL}/gastos`);
   return res.json();
 };
+
 // Deletar
 export const deletarGasto = async (id: string): Promise<void> => {
   await fetch(`${BASE_URL}/gastos/${id}`, {

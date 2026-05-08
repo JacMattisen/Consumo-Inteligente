@@ -1,27 +1,15 @@
-import { useEffect, useState, useCallback } from "react";
-import { getGastos, deletarGasto, atualizarGasto } from "../service/consumo";
+import { deletarGasto, atualizarGasto } from "../service/consumo";
 import type { Gasto } from "../tipos/tipos";
 import { Trash2, Edit } from "lucide-react";
 
-export function ListaGastos() {
-  const [gastos, setGastos] = useState<Gasto[]>([]);
+interface ListaGastosProps {
+  gastos: Gasto[];
+  carregarDados: () => Promise<void>;
+}
 
-  const carregarDados = useCallback(async () => {
-    try {
-      const dados = await getGastos();
-      setGastos(dados);
-    } catch (err) {
-      console.error("Erro ao buscar gastos:", err);
-    }
-  }, []);
-
-  useEffect(() => {
-    const buscarDadosIniciais = async () => {
-      await carregarDados();
-    };
-
-    buscarDadosIniciais();
-  }, [carregarDados]);
+export function ListaGastos({gastos,
+  carregarDados
+}: ListaGastosProps) {
 
   // tipo do gasto (50-30-20)
   const getCategoriaStyle = (catId: string) => {
@@ -45,10 +33,12 @@ export function ListaGastos() {
         await carregarDados();
       } catch (err) {
         console.error("Erro ao deletar:", err);
+        alert("Erro ao deletar gasto!")
       }
     }
   };
-
+  
+  //Atualiza o valor do gasto selecionado
   const handleEdit = async (id: string) => {
     const novoValor = window.prompt("Digite o novo valor:");
     if (novoValor && !isNaN(Number(novoValor))) {
@@ -57,6 +47,7 @@ export function ListaGastos() {
         await carregarDados();
       } catch (err) {
         console.error("Erro ao editar:", err);
+        alert("Gasto atualizado com sucesso!")
       }
     }
   };
