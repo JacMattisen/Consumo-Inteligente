@@ -1,15 +1,22 @@
 import { useState } from "react";
 import { criarRendimento } from "../service/consumo";
 
-export function FormRendimentos() {
+interface FormRendimentosProps {
+  onRendimentoCriado: () => Promise<void>;
+}
+
+export function FormRendimentos({
+  onRendimentoCriado
+}: FormRendimentosProps) {
+
   const [descricao, setDescricao] = useState<string>("");
   const [valor, setValor] = useState<number>(0);
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (valor <= 0) {
-      alert("Por favor, insira um valor de renda válido.");
+    if (!descricao || valor <= 0) {
+      alert("Por favor, insira um valor de renda válido e preecha todos os campos.");
       return;
     }
 
@@ -20,13 +27,15 @@ export function FormRendimentos() {
 
     try {
       await criarRendimento(novoRendimento);
+      await onRendimentoCriado();
       console.log("Renda adicionada com sucesso");
+      alert("Renda adicionada com sucesso!")
 
-      setDescricao("Salário");
+      setDescricao("");
       setValor(0);
 
       // Atualiza a página para os Insights recalcularem os limites imediatamente
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.error("Erro ao adicionar renda", error);
     }
