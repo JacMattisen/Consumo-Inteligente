@@ -1,6 +1,6 @@
-# 💰 Consumo Inteligente 50-30-20
+# 💰 Smart finance 50-30-20
 
-O **Consumo Inteligente** é um dashboard de gestão financeira pessoal que aplica automaticamente o método **50-30-20**. Diferente de uma simples lista de gastos, o sistema educa o usuário sobre sua saúde financeira, distribuindo rendas e despesas em pilares estratégicos.
+O **Smart finance** é um dashboard de gestão financeira pessoal que aplica automaticamente o método **50-30-20**. Diferente de uma simples lista de gastos, o sistema educa o usuário sobre sua saúde financeira, distribuindo rendas e despesas em pilares estratégicos.
 
 ---
 
@@ -16,7 +16,7 @@ O **Consumo Inteligente** é um dashboard de gestão financeira pessoal que apli
 - **Extrato Inteligente:** Lista de gastos com indicadores visuais por pilar.
 
 ---
-- **TSX**
+
 ## 🛠️ Tecnologias Utilizadas
 
 - **React.js**
@@ -87,7 +87,7 @@ consumoInteligente/
     ├── App.tsx         # Componente raiz e estruturação
     ├── main.tsx        # Ponto de entrada da aplicação
     └── index.css       # Estilizações globais e variáveis de tema
-
+````
 ---
 
 ## 🔮 Implementações Futuras
@@ -104,16 +104,13 @@ O projeto foi concebido para ser a base de um ecossistema financeiro completo. P
 
 ## 💻 Como Rodar o Projeto
 
-* Pré-requistos:
-- ter o node.js instalado
+* Pré-requistos: ter o node.js instalado
 
 
 1. **Faça o clone do repositório:**
-
-   ```bash
-   git clone [https://github.com/seu-usuario/consumoInteligente.git](https://github.com/seu-usuario/consumoInteligente.git)
-````
-
+```bash
+git clone https://github.com/Ada-Finance/Consumo-Inteligente.git
+```
 
 2. **Instale as dependências:**
 
@@ -145,18 +142,14 @@ npm run dev
 
 ## 👩‍💻 Desenvolvedoras
 
-Este projeto foi construído com dedicação por:
+Este projeto foi desenvolvido com dedicação em um Hackathon ao final de um curso de Front-end da **AdaTech** por:
 
-- Vivian Santana [GitHub](https://github.com/Vivian-Santana) | [LinkedIn](https://www.linkedin.com/in/vivian-s-santana/)
-- Jacqueline Mattisen [GitHub](https://github.com/JacMattisen) | [LinkedIn](https://www.linkedin.com/in/jacqueline-mattisen)
-
+  * Vivian Santana [GitHub](https://github.com/Vivian-Santana) | [LinkedIn](https://www.linkedin.com/in/vivian-s-santana/)
+  * Jacqueline Mattisen [GitHub](https://github.com/JacMattisen) | [LinkedIn](https://www.linkedin.com/in/jacqueline-mattisen)
 ---
-
-Este projeto foi desenvolvido como parte de um Hackathon ao final de um curso de Front-end da **AdaTech**
-```
-
 ###
 
 | | | |
 |---|---|---|
 | ![Screenshot topo da pagina](./imgs/img1.png) | ![Screenshot gráfico e Insights](./imgs/img2.png) | ![Screenshot Redimentos e Gastos](./imgs/img3.png)|
+
