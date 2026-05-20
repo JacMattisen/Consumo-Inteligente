@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { categorias } from "../constantes/categorias";
 import { criarGasto } from "../service/consumo";
+import { toast } from "sonner";
 
 interface FormGastoProps {
   onGastoCriado: () => Promise<void>;
@@ -19,7 +20,7 @@ export function FormGasto({
 
     // Verificação para não enviar vazio
     if (!descricao || valor <= 0) {
-      alert("Preencha a descrição e o valor!");
+        toast.warning("Por favor, insira um valor de gasto válido e preecha todos os campos.");
       return;
     }
 
@@ -33,7 +34,7 @@ export function FormGasto({
     try {
       await criarGasto(novoGasto); //Chama POST de gastos
       await onGastoCriado();
-      alert("Gasto adicionado com sucesso!")
+      toast.success("Gasto criado com sucesso");
 
       // Limpa o formulário
       setDescricao("");
@@ -42,6 +43,7 @@ export function FormGasto({
 
     } catch (error) {
       console.error("Erro ao criar gasto", error);
+      toast.error("Erro ao criar gasto");
     }
   };
 
@@ -84,7 +86,7 @@ export function FormGasto({
           ))}
         </select>
       </div>
-
+      
       <button
         type="submit"
         className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition w-full font-bold"

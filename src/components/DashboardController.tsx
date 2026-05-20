@@ -8,6 +8,8 @@ import { ListaGastos } from "./ListaGastos";
 import { FormRendimentos } from "./FormRendimentos";
 import { ListaRendimentos } from "./ListaRendimentos";
 import { BanknoteArrowDown, BanknoteArrowUp } from "lucide-react";
+import { GraficoConsumo } from "./Chart";
+import { Insights } from "./Insights";
 
 export default function DashboardController() {
     const [gastos, setGastos] = useState<Gasto[]>([]);
@@ -57,8 +59,8 @@ export default function DashboardController() {
             </h2>
             
             <FormRendimentos
-            onRendimentoCriado={carregarRendimentos}
-        />
+              onRendimentoCriado={carregarRendimentos}
+            />
           </div> 
 
            <div className="border border-green-500 p-6 rounded-2xl border border-slate-700 bg-slate-800/20 shadow-sm">
@@ -68,10 +70,20 @@ export default function DashboardController() {
             <FormGasto onGastoCriado={carregarGastos} />
           </div>
         </div>
+        
+        {/* Gráfico e Insights */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 mt-8 gap-6">
+          <div className="p-6 rounded-2xl border border-slate-700 bg-slate-800/20 shadow-inner flex flex-col items-center justify-center">
+            <GraficoConsumo />
+          </div>
 
+          <div className="p-6 rounded-2xl border border-slate-700 bg-slate-800/20 shadow-inner">
+            <Insights />
+          </div>
+        </div>
 
          {/*abriga as colunas de rendimentos e gastos*/}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+        <div className="grid lg:grid-cols-2 gap-8 mt-8">
           <div className="lg:col-span-1 p-6 rounded-2xl border border-slate-700 bg-slate-900/40 shadow-inner">
             <ListaRendimentos
                 rendimentos={rendimentos}

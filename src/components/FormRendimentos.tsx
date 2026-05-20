@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { criarRendimento } from "../service/consumo";
+import { toast } from "sonner";
 
 interface FormRendimentosProps {
   onRendimentoCriado: () => Promise<void>;
@@ -16,7 +17,7 @@ export function FormRendimentos({
     event.preventDefault();
 
     if (!descricao || valor <= 0) {
-      alert("Por favor, insira um valor de renda válido e preecha todos os campos.");
+      toast.warning("Por favor, insira um valor de renda válido e preecha todos os campos.");
       return;
     }
 
@@ -29,15 +30,13 @@ export function FormRendimentos({
       await criarRendimento(novoRendimento);
       await onRendimentoCriado();
       console.log("Renda adicionada com sucesso");
-      alert("Renda adicionada com sucesso!")
+      toast.success("Renda adicionada com sucesso");
 
       setDescricao("");
       setValor(0);
-
-      // Atualiza a página para os Insights recalcularem os limites imediatamente
-      // window.location.reload();
     } catch (error) {
       console.error("Erro ao adicionar renda", error);
+      toast.error("Erro ao criar renda");
     }
   };
 
@@ -73,7 +72,7 @@ export function FormRendimentos({
           onChange={(e) => setValor(Number(e.target.value))}
         />
       </div>
-
+      
       <button
         type="submit"
         className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition w-full font-bold"
@@ -81,7 +80,7 @@ export function FormRendimentos({
         Adicionar Renda
       </button>
 
-      <p className="text-[10px] text-gray-700 italic">
+      <p className="text-[10px] text-white-700 italic">
         * A soma das rendas define seus limites de 50%, 30% e 20%.
       </p>
     </form>
