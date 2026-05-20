@@ -20,8 +20,8 @@ export function Navbar() {
       {/* Logo */}
       <div className="flex items-center gap-2 text-blue-500">
         <Brain size={28} />
-        <span className="text-primary px-3 py-1 font-size:20px">
-          Consumo Inteligente
+        <span className="text-white px-3 py-1 font-size:20px">
+          Smart Finance
         </span>
       </div>
 
@@ -57,7 +57,7 @@ export function Navbar() {
           onClick={() => navigate("/")}
         >
           <div className="text-right hidden sm:block">
-            <p className="text-sm font-semibold">Olá,VISITANTE</p>
+            <p className="text-sm font-semibold">Usuário</p>
             <p className="text-[10px] uppercase tracking-wider text-blue-500 font-bold">
               Premium
             </p>

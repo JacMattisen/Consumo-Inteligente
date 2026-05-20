@@ -1,7 +1,32 @@
 import type { Rendimento } from "../tipos/tipos";
-
 import { atualizarRenda, deletarRenda} from "../service/consumo";
 import { Edit, Trash2 } from "lucide-react";
+import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input"
+import { Label } from "./ui/label";
+import { Button } from "./ui/button";
+import { useState } from "react";
 
 interface ListaRendimentosProps {
   rendimentos: Rendimento[];
@@ -13,32 +38,51 @@ export function ListaRendimentos({
   carregarDados
 }: ListaRendimentosProps) {
 
+  const [openId, setOpenId] = useState<string | null>(null)
+
   const handleDelete = async (id: string) => {
-    if (window.confirm("Deseja apagar esta renda?")) {
       try {
         await deletarRenda(id);
         await carregarDados();
       } catch (err) {
-        console.error("Erro ao deletar:", err);
+        console.error("Erro ao excluir renda:", err);
+        toast.error("Erro ao excluir renda");
       }
-    }
   };
 
-  const handleEdit = async (id: string) => {
-    const novoValor = window.prompt("Digite o novo valor:");
-    if (novoValor && !isNaN(Number(novoValor))) {
+  const handleEdit = async (e: React.SubmitEvent<HTMLFormElement>, id: string) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const novoValor = formData.get("value");
+
+    if (!novoValor) return;
+
+    const valorNumber = Number(novoValor);
+
+      if (isNaN(valorNumber)) {
+        toast.error("Valor inválido");
+        return;
+      }
+    
       try {
-        await atualizarRenda(id, { valor: Number(novoValor) });
+        await atualizarRenda(id, { valor: valorNumber });
+        
         await carregarDados();
+        toast.success("Renda atualizada com sucesso!");
+
+        setOpenId(null);
+
       } catch (err) {
         console.error("Erro ao editar:", err);
-      }
-    }
+        toast.error("Erro ao atualizar renda");
+      } 
+      
   };
 
   return (
     <div className="w-full h-full flex flex-col space-y-4">
-      <h3 className="font-bold border-b border-slate-700 pb-2 text-primary flex justify-between items-center">
+      <h3 className="font-bold border-b border-slate-700 pb-2 text-white">
         Rendimentos fixos e variáveis
       </h3>
 
@@ -65,21 +109,86 @@ export function ListaRendimentos({
                 </div>
 
                 <div className="flex gap-2">
-                  <button
-                    onClick={() => handleEdit(r.id)}
-                    className="text-white-500 hover:text-yellow-500 transition p-1"
-                    title="Editar valor"
-                  >
-                    <Edit size={16} />
-                  </button>
+                  {/* Janela de edição */}
+                <Dialog 
+                      open={openId === r.id} 
+                      onOpenChange={(isOpen) => {
+                      setOpenId(isOpen ? r.id : null)
+                    }}
+                    >
+                    
+                      <DialogTrigger asChild>
+                        <button
+                            className="text-white-500 hover:text-yellow-500 transition p-1"
+                          >
+                          <Edit size={16} />
+                        </button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-sm bg-slate-900 border-slate-700 text-white">
+                        <form onSubmit={(e) => handleEdit(e, r.id)}>
+                          <DialogHeader>
+                            <DialogTitle>Editar renda</DialogTitle>
+                            <DialogDescription className="mb-4 text-sm text-slate-400">
+                              Atualize o valor do rendimento, digite apenas números.
+                            </DialogDescription>
+                          </DialogHeader>
+                          <div>
+                            <div>
+                              <Label htmlFor="value-1"></Label>
+                              <Input className="mb-2" id="value-1" name="value" type="number" step="0.01" 
+                              defaultValue={r.valor.toFixed(2)} />
+                            </div>
+                          </div>
+                          <DialogFooter>
+                            <DialogClose asChild>
+                              <Button variant="outline" className="text-black hover:bg-slate-300 transition">
+                                Cancel
+                              </Button>
+                            </DialogClose>
+                            <Button
+                            className="bg-green-500 hover:bg-green-600"
+                            type="submit">Save changes</Button>
+                          </DialogFooter>
 
-                  <button
-                    onClick={() => handleDelete(r.id)}
-                    className="text-white-500 hover:text-red-500 transition p-1"
-                    title="Excluir"
-                  >
-                    <Trash2 size={16} />
-                  </button>
+                        </form>
+                      </DialogContent>                   
+                </Dialog>
+
+                    {/* Janela de confirmação de exclusão de renda */}
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <button
+                          className="text-white-500 hover:text-red-500 transition p-1"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </AlertDialogTrigger>
+
+                      <AlertDialogContent className="bg-slate-900 border-slate-700 text-white">
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Tem certeza que deseja excluir a renda?
+                          </AlertDialogTitle>
+
+                          <AlertDialogDescription className="text-slate-400">
+                            Essa ação não pode ser desfeita.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+
+                        <AlertDialogFooter>
+                          <AlertDialogCancel className="text-black hover:bg-slate-300 transition">
+                            Cancelar
+                          </AlertDialogCancel>
+
+                          <AlertDialogAction
+                            onClick={() => handleDelete(r.id)}
+                            className="bg-red-500 hover:bg-red-600"
+                          >
+                            Excluir
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
                 </div>
               </div>
             );

@@ -70,7 +70,7 @@ export function GraficoConsumo() {
       {/* maior gasto individual */}
       {maiorGasto && (
         <div className="mb-4 p-2 bg-slate-800/50 rounded-lg border border-slate-700 text-center w-full">
-          <p className="text-[10px] uppercase tracking-wider text-primary">
+          <p className="text-[10px] uppercase tracking-wider text-white">
             Maior Gasto Detectado
           </p>
           <p className="text-sm font-bold text-white">
@@ -85,16 +85,16 @@ export function GraficoConsumo() {
         </div>
       )}
 
-      <div className="w-full h-64">
+      <div className="w-full h-[450px]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
               data={dadosGrafico}
               cx="50%"
               cy="50%"
-              innerRadius={55}
-              outerRadius={75}
-              paddingAngle={8}
+              innerRadius={85}
+              outerRadius={120}
+              paddingAngle={3}
               dataKey="value"
             >
               {dadosGrafico.map((_, index) => (

@@ -1,8 +1,6 @@
 // views/Dashboard.tsx
 import { Navbar } from "../components/Navbar";
 import { Footer } from "../components/Footer";
-import { Insights } from "../components/Insights";
-import { GraficoConsumo } from "../components/Chart";
 import DashboardController from "../components/DashboardController";
 
 export default function Dashboard() {
@@ -16,18 +14,9 @@ export default function Dashboard() {
             Gerencie seu dinheiro com inteligência.
           </p>
         </div>
-        {/* Gráfico e Insights */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="p-6 rounded-2xl border border-slate-700 bg-slate-800/20 shadow-inner flex flex-col items-center justify-center">
-            <GraficoConsumo />
-          </div>
-
-          <div className="p-6 rounded-2xl border border-slate-700 bg-slate-800/20 shadow-inner">
-            <Insights />
-          </div>
-        </div>
-        {/* Primeira coluna - Lista de gastos */}
-          <div className="lg:col-span-1 p-6 rounded-2xl border border-slate-700 bg-slate-900/40 shadow-inner">
+        
+        {/* Chama DashboardController com os forms de inputs e outputs */}
+          <div className="lg:col-span-1 p-6 rounded-2xl bg-slate-900/40 shadow-inner">
             <DashboardController />
           </div>
       </main>

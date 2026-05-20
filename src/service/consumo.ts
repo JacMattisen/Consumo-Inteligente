@@ -42,9 +42,6 @@ export const atualizarRenda = async (
   if (!res.ok) {
     throw new Error(`Erro ao atualizar renda: ${res.status}`);
   }
-
-  alert("Renda alterada com sucesso!")
-
   return res.json();
 };
 

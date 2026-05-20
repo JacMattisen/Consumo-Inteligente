@@ -16,14 +16,18 @@ O **Consumo Inteligente** é um dashboard de gestão financeira pessoal que apli
 - **Extrato Inteligente:** Lista de gastos com indicadores visuais por pilar.
 
 ---
-
+- **TSX**
 ## 🛠️ Tecnologias Utilizadas
 
-- **React.js** (com TypeScript)
-- **Tailwind CSS** (Estilização responsiva e suporte a temas)
-- **Lucide React** (Ícones modernos)
-- **Recharts** (Visualização de dados)
-- **MockAPI** (Persistência de dados em nuvem)
+- **React.js**
+- **TSX**
+- **Vite**
+- **Node**
+- **shadcn/Radix**
+- **Tailwind/CSS**
+- **Lucide React**
+- **Recharts**
+- **MockAPI**
 
 ---
 
@@ -54,15 +58,26 @@ consumoInteligente/
 ├── 📂 public/          # Ativos estáticos (ícones, favicons, etc.)
 └── 📂 src/
     ├── 📂 components/  # Componentes reutilizáveis de UI e lógica parcial
-    │   ├── Chart.tsx           # Gráficos de visualização (Recharts)
-    │   ├── Insights.tsx        # Painel de análise 50-30-20
-    │   ├── FormGasto.tsx       # Registro de novas despesas
-    │   ├── FormRendimentos.tsx # Registro de entradas financeiras
-    │   ├── ListaGastos.tsx     # Histórico detalhado de despesas
-    │   └── ...                 # Footer, Navbar, Login, etc.
+    |   | 📂 ui/  # componentes de interface criados com shadcn
+    │   | └── alert-dialog.tsx
+    |   | └── button.tsx
+    |   | └── dialog.tsx
+    |   | └── input.tsx
+    |   | └── label.tsx
+    |   |
+    |   ├── Chart.tsx           # Gráficos de visualização (Recharts)
+    │   ├── DashboradController.tsx #componente pai que orquestra estados de saída e entrada de dados
+    |   ├── Footer.tsx
+    |   ├── FormGasto.tsx       # Registro de novas despesas
+    |   ├── FormRendimentos.tsx # Registro de entradas financeiras
+    |   ├── Insights.tsx        # Painel de análise 50-30-20
+    |   ├── ListaGastos.tsx     # Histórico detalhado de despesas
+    │   ├── ListaRendimntos.tsx # Histórico detalhado de fontes de renda
+    │   ├── Nav.bar.tsx
+    |
     ├── 📂 constantes/  # Valores fixos (Configuração das categorias)
     │   └── categorias.ts
-    ├── 📂 service/     # Integração com API (Consumo de dados/Axios)
+    ├── 📂 service/     # Integração com API (Consumo dos endpoints)
     │   └── consumo.ts
     ├── 📂 tipos/       # Definições de Interfaces TypeScript (Types)
     │   └── tipos.ts
@@ -72,8 +87,6 @@ consumoInteligente/
     ├── App.tsx         # Componente raiz e estruturação
     ├── main.tsx        # Ponto de entrada da aplicação
     └── index.css       # Estilizações globais e variáveis de tema
-
----
 
 ---
 
@@ -91,24 +104,42 @@ O projeto foi concebido para ser a base de um ecossistema financeiro completo. P
 
 ## 💻 Como Rodar o Projeto
 
+* Pré-requistos:
+- ter o node.js instalado
 
-1. **Clone o repositório:**
+
+1. **Faça o clone do repositório:**
 
    ```bash
    git clone [https://github.com/seu-usuario/consumoInteligente.git](https://github.com/seu-usuario/consumoInteligente.git)
 ````
 
-```
 
 2. **Instale as dependências:**
 
-Bash
+```bash
 npm install
+```
 
-3. **Inicie o projeto:**
+3. **libs usadas:**
 
-Bash
+```bash
+npm install sonner
+```
+
+```bash
+npm install recharts
+```
+
+```bash
+npx shadcn@latest init
+```
+
+4. **Rodar o projeto:**
+
+```bash
 npm run dev
+```
 
 ---
 
@@ -116,10 +147,16 @@ npm run dev
 
 Este projeto foi construído com dedicação por:
 
-- **Vivian Santana** [GitHub](https://github.com/Vivian-Santana) | [LinkedIn](https://www.linkedin.com/in/vivian-s-santana/)
-- **Jacqueline Mattisen** - [GitHub](https://github.com/JacMattisen) | [LinkedIn](https://www.linkedin.com/in/jacqueline-mattisen)
+- Vivian Santana [GitHub](https://github.com/Vivian-Santana) | [LinkedIn](https://www.linkedin.com/in/vivian-s-santana/)
+- Jacqueline Mattisen [GitHub](https://github.com/JacMattisen) | [LinkedIn](https://www.linkedin.com/in/jacqueline-mattisen)
 
 ---
 
-Este projeto foi desenvolvido como parte de um Hackathon pela **AdaTech**
+Este projeto foi desenvolvido como parte de um Hackathon ao final de um curso de Front-end da **AdaTech**
 ```
+
+###
+
+| | | |
+|---|---|---|
+| ![Screenshot topo da pagina](./imgs/img1.png) | ![Screenshot gráfico e Insights](./imgs/img2.png) | ![Screenshot Redimentos e Gastos](./imgs/img3.png)|
