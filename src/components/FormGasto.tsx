@@ -4,6 +4,7 @@ import { criarGasto } from "../service/consumo";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Button } from "./ui/button";
+import { useTranslation } from "react-i18next";
 
 interface FormGastoProps {
   onGastoCriado: () => Promise<void>;
@@ -13,15 +14,14 @@ export function FormGasto({ onGastoCriado }: FormGastoProps) {
   const [descricao, setDescricao] = useState<string>("");
   const [valor, setValor] = useState<number>(0);
   const [categoria, setCategoria] = useState<string>("");
+  const { t } = useTranslation();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Verificação para não enviar vazio ou inválido
     if (!descricao || valor <= 0 || !categoria) {
-      toast.warning(
-        "Por favor, preencha todos os campos e insira um valor válido.",
-      );
+      toast.warning(t("form_gasto.aviso_campos"));
       return;
     }
 
@@ -35,7 +35,7 @@ export function FormGasto({ onGastoCriado }: FormGastoProps) {
     try {
       await criarGasto(novoGasto); // Chama POST de gastos
       await onGastoCriado();
-      toast.success("Gasto criado com sucesso");
+      toast.success(t("form_gasto.sucesso"));
 
       // Limpa o formulário
       setDescricao("");
@@ -43,7 +43,7 @@ export function FormGasto({ onGastoCriado }: FormGastoProps) {
       setCategoria("");
     } catch (error) {
       console.error("Erro ao criar gasto", error);
-      toast.error("Erro ao criar gasto");
+      toast.error(t("form_gasto.erro"));
     }
   };
 
@@ -51,7 +51,7 @@ export function FormGasto({ onGastoCriado }: FormGastoProps) {
     <form onSubmit={handleSubmit} className="mt-6 space-y-4">
       <Input
         className="bg-transparent border-border text-foreground w-full"
-        placeholder="Descrição (ex: Aluguel)"
+        placeholder={t("form_gasto.placeholder_descricao")}
         value={descricao}
         onChange={(e) => setDescricao(e.target.value)}
       />
@@ -61,16 +61,16 @@ export function FormGasto({ onGastoCriado }: FormGastoProps) {
         <Input
           type="number"
           className="bg-transparent border-border text-foreground w-1/2"
-          placeholder="Valor (R$)"
+          placeholder={t("form_gasto.placeholder_valor")}
           value={valor || ""}
           onChange={(e) => setValor(Number(e.target.value))}
         />
 
         <select
           className={`
-            p-2 rounded border border-border w-1/2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring
-            ${categoria === "" ? "text-muted-foreground" : "text-foreground"}
-          `}
+    p-2 rounded border border-border w-1/2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring
+    ${categoria === "" ? "text-muted-foreground" : "text-foreground"}
+  `}
           value={categoria}
           onChange={(e) => setCategoria(e.target.value)}
         >
@@ -80,7 +80,7 @@ export function FormGasto({ onGastoCriado }: FormGastoProps) {
             hidden
             className="bg-background text-muted-foreground"
           >
-            Selecione uma categoria
+            {t("form_gasto.selecione_categoria")}
           </option>
 
           {categorias.map((cat) => (
@@ -89,7 +89,7 @@ export function FormGasto({ onGastoCriado }: FormGastoProps) {
               value={cat.id}
               className="bg-background text-foreground"
             >
-              {cat.descricao}
+              {t(`categorias.${cat.id}`, { defaultValue: cat.descricao })}
             </option>
           ))}
         </select>
@@ -99,7 +99,7 @@ export function FormGasto({ onGastoCriado }: FormGastoProps) {
         type="submit"
         className="w-full font-bold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
       >
-        Adicionar Gasto
+        {t("form_gasto.botao_adicionar")}
       </Button>
     </form>
   );

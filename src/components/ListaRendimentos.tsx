@@ -27,6 +27,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ListaRendimentosProps {
   rendimentos: Rendimento[];
@@ -38,15 +39,37 @@ export function ListaRendimentos({
   carregarDados,
 }: ListaRendimentosProps) {
   const [openId, setOpenId] = useState<string | null>(null);
+  const { t, i18n } = useTranslation();
 
   const handleDelete = async (id: string) => {
     try {
       await deletarRenda(id);
       await carregarDados();
+      toast.success(t("lista_rendimentos.sucesso_excluir"));
     } catch (err) {
       console.error("Erro ao excluir renda:", err);
-      await toast.error("Erro ao excluir renda");
+      await toast.error(t("lista_rendimentos.erro_excluir"));
     }
+  };
+
+  const formatarMoeda = (valor: number) => {
+    const locale =
+      i18n.language === "pt"
+        ? "pt-BR"
+        : i18n.language.startsWith("de")
+          ? "de-DE"
+          : "en-US";
+    const moeda =
+      i18n.language === "pt"
+        ? "BRL"
+        : i18n.language.startsWith("de")
+          ? "EUR"
+          : "USD";
+
+    return new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency: moeda,
+    }).format(valor);
   };
 
   const handleEdit = async (
@@ -63,7 +86,7 @@ export function ListaRendimentos({
     const valorNumber = Number(novoValor);
 
     if (isNaN(valorNumber)) {
-      toast.error("Valor inválido");
+      toast.error(t("lista_rendimentos.valor_invalido"));
       return;
     }
 
@@ -71,12 +94,12 @@ export function ListaRendimentos({
       await atualizarRenda(id, { valor: valorNumber });
 
       await carregarDados();
-      toast.success("Renda updated com sucesso!");
+      toast.success(t("lista_rendimentos.sucesso_editar"));
 
       setOpenId(null);
     } catch (err) {
       console.error("Erro ao editar:", err);
-      toast.error("Erro ao atualizar renda");
+      toast.error(t("lista_rendimentos.erro_editar"));
     }
   };
 
@@ -84,12 +107,12 @@ export function ListaRendimentos({
     <div className="w-full h-full flex flex-col space-y-4 ">
       {/* Título adaptável ao tema */}
       <h3 className="font-bold border-b border-border pb-2 text-foreground">
-        Rendimentos fixos e variáveis
+        {t("lista_rendimentos.titulo")}
       </h3>
 
       {rendimentos.length === 0 ? (
         <p className="text-sm opacity-60 italic text-muted-foreground">
-          Nenhum rendimento encontrado.
+          {t("lista_rendimentos.sem_rendimentos")}
         </p>
       ) : (
         <div className="space-y-2 overflow-y-auto flex-1 pr-2 custom-scrollbar ">
@@ -107,7 +130,7 @@ export function ListaRendimentos({
 
                   {/* Verde semântico do CSS */}
                   <span className="text-xs text-accent-success font-bold">
-                    R$ {r.valor.toFixed(2)}
+                    {formatarMoeda(r.valor)}
                   </span>
                 </div>
 
@@ -128,10 +151,11 @@ export function ListaRendimentos({
                     <DialogContent className="sm:max-w-sm bg-background border-border text-foreground">
                       <form onSubmit={(e) => handleEdit(e, r.id)}>
                         <DialogHeader>
-                          <DialogTitle>Editar renda</DialogTitle>
+                          <DialogTitle>
+                            {t("lista_rendimentos.editar_titulo")}
+                          </DialogTitle>
                           <DialogDescription className="mb-4 text-sm text-muted-foreground">
-                            Atualize o valor do rendimento, digite apenas
-                            números.
+                            {t("lista_rendimentos.editar_descricao")}
                           </DialogDescription>
                         </DialogHeader>
                         <div>
@@ -153,14 +177,14 @@ export function ListaRendimentos({
                               variant="outline"
                               className="border-border text-foreground hover:bg-accent transition"
                             >
-                              Cancelar
+                              {t("lista_rendimentos.botao_cancelar")}
                             </Button>
                           </DialogClose>
                           <Button
                             className="bg-green-600 text-white hover:bg-green-700"
                             type="submit"
                           >
-                            Salvar alterações
+                            {t("lista_rendimentos.botao_salvar")}
                           </Button>
                         </DialogFooter>
                       </form>
@@ -179,22 +203,22 @@ export function ListaRendimentos({
                     <AlertDialogContent className="bg-background border-border text-foreground">
                       <AlertDialogHeader>
                         <AlertDialogTitle>
-                          Tem certeza que deseja excluir a renda?
+                          {t("lista_rendimentos.excluir_titulo")}
                         </AlertDialogTitle>
                         <AlertDialogDescription className="text-muted-foreground">
-                          Essa ação não pode ser desfeita.
+                          {t("lista_rendimentos.excluir_descricao")}
                         </AlertDialogDescription>
                       </AlertDialogHeader>
 
                       <AlertDialogFooter>
                         <AlertDialogCancel className="border-border text-foreground hover:bg-accent transition">
-                          Cancelar
+                          {t("lista_rendimentos.botao_cancelar")}
                         </AlertDialogCancel>
                         <AlertDialogAction
                           onClick={() => handleDelete(r.id)}
                           className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                         >
-                          Excluir
+                          {t("lista_rendimentos.botao_excluir")}
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>

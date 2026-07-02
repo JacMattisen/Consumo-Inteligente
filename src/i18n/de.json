@@ -1,0 +1,110 @@
+{
+  "welcome": "Willkommen auf Ihrem Dashboard",
+  "essentials": "Fixkosten",
+  "over_limit": "Achtung: Limit erreicht!",
+
+  "navbar": {
+    "user": "Benutzer",
+    "premium": "Premium"
+  },
+
+  "cadastrar_renda": "Einkommen registrieren",
+  "novo_gasto": "Neue Ausgabe",
+
+  "categorias": {
+    "1": "Essen (Fixkosten)",
+    "2": "Freizeit (Wünsche)",
+    "3": "Gesundheit (Fixkosten)",
+    "4": "Monatliche Rechnungen (Fixkosten)",
+    "5": "Andere (Wünsche)",
+    "6": "Sparen (Investitionen)"
+  },
+
+  "form_gasto": {
+    "placeholder_descricao": "Beschreibung (z.B. Miete)",
+    "placeholder_valor": "Betrag (€)",
+    "selecione_categoria": "Wählen Sie eine Kategorie",
+    "botao_adicionar": "Ausgabe hinzufügen",
+    "aviso_campos": "Bitte füllen Sie alle Felder aus und geben Sie einen gültigen Wert ein.",
+    "sucesso": "Ausgabe erfolgreich erstellt",
+    "erro": "Fehler beim Erstellen der Ausgabe"
+  },
+
+  "form_rendimentos": {
+    "selecione_categoria": "Einkommenskategorie auswählen",
+    "placeholder_valor": "Betrag (€)",
+    "botao_adicionar": "Einkommen hinzufügen",
+    "nota_limites": "* Die Summe der Einkommen bestimmt Ihre 50%-, 30%- und 20%-Grenzen.",
+    "aviso_campos": "Bitte geben Sie einen gültigen Einkommensbetrag ein und füllen Sie alle Felder aus.",
+    "sucesso": "Einkommen erfolgreich hinzugefügt",
+    "erro": "Fehler beim Erstellen des Einkommens",
+    "opcoes": {
+      "salario": "Gehalt",
+      "renda_extra": "Zusatzeinkommen",
+      "investimentos": "Investitionen",
+      "reserva": "Ersparnisse/Rücklagen",
+      "outros": "Sonstiges"
+    }
+  },
+  "insights": {
+    "sem_renda": "Tragen Sie Ihr Einkommen ein, um Ihre finanziellen Säulen zu organisieren.",
+    "essenciais": "Fixkosten (50%)",
+    "limite_de": "/ Limit von",
+    "meta_de": "/ Ziel von",
+    "aviso_essenciais": "⚠️ Reduzieren Sie die Grundausgaben!",
+    "estilo_vida": "Lebensstil (30%)",
+    "aviso_desejos": "⚠️ Kontrollieren Sie Ihre momentanen Wünsche!",
+    "futuro_reserva": "Zukunft & Rücklagen (20%)",
+    "sucesso_futuro": "✅ Auf dem richtigen Weg zur Freiheit!",
+    "aviso_futuro": "📉 Versuchen Sie, etwas mehr zu sparen.",
+    "entenda_metodo": "Methode verstehen",
+    "desc_essenciais": "Wohnen (Miete/Nebenkosten), Stromrechnung, Wasser, Gas, Supermarkt, Transport, Krankenversicherung und Bildung.",
+    "desc_desejos": "Abonnements (Netflix, Spotify), Restaurants, Schönheitssalon, nicht notwendige Einkäufe, Reisen und Hobbys.",
+    "desc_futuro": "Notgroschen, Schuldentilgung, Investitionsbeiträge (Aktien, Anleihen, Altersvorsorge)."
+  },
+  "lista_gastos": {
+    "titulo": "Ausgabenübersicht",
+    "sem_gastos": "Keine Ausgaben gefunden.",
+    "editar_titulo": "Ausgabe bearbeiten",
+    "editar_descricao": "Aktualisieren Sie den Ausgabenbetrag, geben Sie nur Zahlen ein.",
+    "botao_cancelar": "Abbrechen",
+    "botao_salvar": "Änderungen speichern",
+    "excluir_titulo": "Sind Sie sicher, dass Sie diese Ausgabe löschen möchten?",
+    "excluir_descricao": "Diese Aktion kann nicht rückgängig gemacht werden.",
+    "botao_excluir": "Löschen",
+    "sucesso_excluir": "Ausgabe erfolgreich gelöscht!",
+    "erro_excluir": "Fehler beim Löschen der Ausgabe",
+    "sucesso_editar": "Ausgabe erfolgreich aktualisiert!",
+    "erro_editar": "Fehler beim Aktualisieren der Ausgabe",
+    "valor_invalido": "Ungültiger Wert",
+    "categorias": {
+      "essencial": "Fixkosten",
+      "desejo": "Wunsch",
+      "investimento": "Investition",
+      "outro": "Andere"
+    }
+  },
+  "lista_rendimentos": {
+    "titulo": "Feste und variable Einkommen",
+    "sem_rendimentos": "Kein Einkommen gefunden.",
+    "editar_titulo": "Einkommen bearbeiten",
+    "editar_descricao": "Aktualisieren Sie den Einkommensbetrag, geben Sie nur Zahlen ein.",
+    "botao_cancelar": "Abbrechen",
+    "botao_salvar": "Änderungen speichern",
+    "excluir_titulo": "Sind Sie sicher, dass Sie dieses Einkommen löschen möchten?",
+    "excluir_descricao": "Diese Aktion kann nicht rückgängig gemacht werden.",
+    "botao_excluir": "Löschen",
+    "sucesso_excluir": "Einkommen erfolgreich gelöscht!",
+    "erro_excluir": "Fehler beim Löschen des Einkommens",
+    "sucesso_editar": "Einkommen erfolgreich aktualisiert!",
+    "erro_editar": "Fehler beim Aktualisieren des Einkommens",
+    "valor_invalido": "Ungültiger Wert"
+  },
+  "grafico_consumo": {
+    "titulo": "50-30-20 Übersicht",
+    "maior_gasto": "Höchste Ausgabe Erkannt",
+    "essenciais": "Fixkosten (50%)",
+    "desejos": "Wünsche (30%)",
+    "reserva": "Rücklagen (20%)"
+  }
+}

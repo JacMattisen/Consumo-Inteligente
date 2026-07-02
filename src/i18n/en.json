@@ -1,0 +1,110 @@
+{
+  "welcome": "Welcome to your Dashboard",
+  "essentials": "Essentials",
+  "over_limit": "Warning: Limit reached!",
+
+  "navbar": {
+    "user": "User",
+    "premium": "Premium"
+  },
+
+  "cadastrar_renda": "Register Income",
+  "novo_gasto": "New Expense",
+
+  "categorias": {
+    "1": "Food (Essential)",
+    "2": "Leisure (Wants)",
+    "3": "Health (Essential)",
+    "4": "Monthly Bills (Essential)",
+    "5": "Others (Wants)",
+    "6": "Savings (Investments)"
+  },
+
+  "form_gasto": {
+    "placeholder_descricao": "Description (e.g., Rent)",
+    "placeholder_valor": "Amount ($)",
+    "selecione_categoria": "Select a category",
+    "botao_adicionar": "Add Expense",
+    "aviso_campos": "Please fill in all fields and enter a valid value.",
+    "sucesso": "Expense created successfully",
+    "erro": "Error creating expense"
+  },
+
+  "form_rendimentos": {
+    "selecione_categoria": "Select income category",
+    "placeholder_valor": "Amount ($)",
+    "botao_adicionar": "Add Income",
+    "nota_limites": "* The sum of incomes defines your 50%, 30%, and 20% limits.",
+    "aviso_campos": "Please enter a valid income amount and fill in all fields.",
+    "sucesso": "Income added successfully",
+    "erro": "Error creating income",
+    "opcoes": {
+      "salario": "Salary",
+      "renda_extra": "Extra Income",
+      "investimentos": "Investments",
+      "reserva": "Savings/Reserve",
+      "outros": "Others"
+    }
+  },
+  "insights": {
+    "sem_renda": "Register your income to organize your financial pillars.",
+    "essenciais": "Essentials (50%)",
+    "limite_de": "/ limit of",
+    "meta_de": "/ target of",
+    "aviso_essenciais": "⚠️ Reduce basic expenses!",
+    "estilo_vida": "Lifestyle (30%)",
+    "aviso_desejos": "⚠️ Control your momentary desires!",
+    "futuro_reserva": "Future & Savings (20%)",
+    "sucesso_futuro": "✅ On the right track to freedom!",
+    "aviso_futuro": "📉 Try to save a bit more.",
+    "entenda_metodo": "Understand the Method",
+    "desc_essenciais": "Housing (rent/condo), electricity bill, water, gas, supermarket, transport, health insurance, and education.",
+    "desc_desejos": "Subscriptions (Netflix, Spotify), restaurants, beauty salon, non-essential purchases, travel, and hobbies.",
+    "desc_futuro": "Emergency fund, debt payment, investment contributions (stocks, bonds, retirement)."
+  },
+  "lista_gastos": {
+    "titulo": "Expense Statement",
+    "sem_gastos": "No expenses found.",
+    "editar_titulo": "Edit expense",
+    "editar_descricao": "Update the expense amount, enter numbers only.",
+    "botao_cancelar": "Cancel",
+    "botao_salvar": "Save changes",
+    "excluir_titulo": "Are you sure you want to delete this expense?",
+    "excluir_descricao": "This action cannot be undone.",
+    "botao_excluir": "Delete",
+    "sucesso_excluir": "Expense deleted successfully!",
+    "erro_excluir": "Error deleting expense",
+    "sucesso_editar": "Expense updated successfully!",
+    "erro_editar": "Error updating expense",
+    "valor_invalido": "Invalid value",
+    "categorias": {
+      "essencial": "Essential",
+      "desejo": "Want",
+      "investimento": "Investment",
+      "outro": "Other"
+    }
+  },
+  "lista_rendimentos": {
+    "titulo": "Fixed and Variable Income",
+    "sem_rendimentos": "No income found.",
+    "editar_titulo": "Edit income",
+    "editar_descricao": "Update the income amount, enter numbers only.",
+    "botao_cancelar": "Cancel",
+    "botao_salvar": "Save changes",
+    "excluir_titulo": "Are you sure you want to delete this income?",
+    "excluir_descricao": "This action cannot be undone.",
+    "botao_excluir": "Delete",
+    "sucesso_excluir": "Income deleted successfully!",
+    "erro_excluir": "Error deleting income",
+    "sucesso_editar": "Income updated successfully!",
+    "erro_editar": "Error updating income",
+    "valor_invalido": "Invalid value"
+  },
+  "grafico_consumo": {
+    "titulo": "50-30-20 View",
+    "maior_gasto": "Highest Expense Detected",
+    "essenciais": "Essentials (50%)",
+    "desejos": "Wants (30%)",
+    "reserva": "Savings (20%)"
+  }
+}

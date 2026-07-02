@@ -1,0 +1,111 @@
+{
+  "welcome": "Bem-vindo ao seu Dashboard",
+  "essentials": "Essenciais",
+  "over_limit": "Atenção: Limite atingido!",
+
+  "navbar": {
+    "user": "Usuário",
+    "premium": "Premium"
+  },
+
+  "cadastrar_renda": "Cadastrar Renda",
+  "novo_gasto": "Novo Gasto",
+
+  "categorias": {
+    "1": "Alimentação (Essencial)",
+    "2": "Lazer (Desejo)",
+    "3": "Saúde (Essencial)",
+    "4": "Contas mensais (Essencial)",
+    "5": "Outros (Desejo)",
+    "6": "Poupança (Investimento)"
+  },
+
+  "form_gasto": {
+    "placeholder_descricao": "Descrição (ex: Aluguel)",
+    "placeholder_valor": "Valor (R$)",
+    "selecione_categoria": "Selecione uma categoria",
+    "botao_adicionar": "Adicionar Gasto",
+    "aviso_campos": "Por favor, preencha todos os campos e insira um valor válido.",
+    "sucesso": "Gasto criado com sucesso",
+    "erro": "Erro ao criar gasto"
+  },
+
+  "form_rendimentos": {
+    "selecione_categoria": "Selecione a categoria de rendimento",
+    "placeholder_valor": "Valor (R$)",
+    "botao_adicionar": "Adicionar Renda",
+    "nota_limites": "* A soma das rendas define seus limites de 50%, 30% e 20%.",
+    "aviso_campos": "Por favor, insira um valor de renda válido e preencha todos os campos.",
+    "sucesso": "Renda adicionada com sucesso",
+    "erro": "Erro ao criar renda",
+    "opcoes": {
+      "salario": "Salário",
+      "renda_extra": "Renda Extra",
+      "investimentos": "Rendimentos",
+      "reserva": "Reserva/Poupança",
+      "outros": "Outros"
+    }
+  },
+  "insights": {
+    "sem_renda": "Cadastre sua renda para organizar seus pilares financeiros.",
+    "essenciais": "Essenciais (50%)",
+    "limite_de": "/ limite de",
+    "meta_de": "/ meta de",
+    "aviso_essenciais": "⚠️ Reduza gastos básicos!",
+    "estilo_vida": "Estilo de Vida (30%)",
+    "aviso_desejos": "⚠️ Controle seus desejos momentâneos!",
+    "futuro_reserva": "Futuro e Reserva (20%)",
+    "sucesso_futuro": "✅ No caminho certo para a liberdade!",
+    "aviso_futuro": "📉 Tente poupar um pouco mais.",
+    "entenda_metodo": "Entenda o Método",
+    "desc_essenciais": "Moradia (aluguel/condomínio), conta de luz, água, gás, supermercado, transporte, plano de saúde e educação.",
+    "desc_desejos": "Assinaturas (Netflix, Spotify), restaurantes, salão de beleza, compras não essenciais, viagens e hobbies.",
+    "desc_futuro": "Reserva de emergência, pagamento de dívidas, aportes em investimentos (ações, tesouro direto, previdência)."
+  },
+
+  "lista_gastos": {
+    "titulo": "Extrato de Gastos",
+    "sem_gastos": "Nenhum gasto encontrado.",
+    "editar_titulo": "Editar gasto",
+    "editar_descricao": "Atualize o valor do gasto, digite apenas números.",
+    "botao_cancelar": "Cancelar",
+    "botao_salvar": "Salvar alterações",
+    "excluir_titulo": "Tem certeza que deseja excluir o gasto?",
+    "excluir_descricao": "Essa ação não pode ser desfeita.",
+    "botao_excluir": "Excluir",
+    "sucesso_excluir": "Gasto excluído com sucesso!",
+    "erro_excluir": "Erro ao excluir gasto",
+    "sucesso_editar": "Gasto atualizado com sucesso!",
+    "erro_editar": "Erro ao atualizar gasto",
+    "valor_invalido": "Valor inválido",
+    "categorias": {
+      "essencial": "Essencial",
+      "desejo": "Desejo",
+      "investimento": "Investimento",
+      "outro": "Outro"
+    }
+  },
+  "lista_rendimentos": {
+    "titulo": "Rendimentos fixos e variáveis",
+    "sem_rendimentos": "Nenhum rendimento encontrado.",
+    "editar_titulo": "Editar renda",
+    "editar_descricao": "Atualize o valor do rendimento, digite apenas números.",
+    "botao_cancelar": "Cancelar",
+    "botao_salvar": "Salvar alterações",
+    "excluir_titulo": "Tem certeza que deseja excluir a renda?",
+    "excluir_descricao": "Essa ação não pode ser desfeita.",
+    "botao_excluir": "Excluir",
+    "sucesso_excluir": "Renda excluída com sucesso!",
+    "erro_excluir": "Erro ao excluir renda",
+    "sucesso_editar": "Renda atualizada com sucesso!",
+    "erro_editar": "Erro ao atualizar renda",
+    "valor_invalido": "Valor inválido"
+  },
+  "grafico_consumo": {
+    "titulo": "Visão 50-30-20",
+    "maior_gasto": "Maior Gasto Detectado",
+    "essenciais": "Essenciais (50%)",
+    "desejos": "Desejos (30%)",
+    "reserva": "Reserva (20%)"
+  }
+}

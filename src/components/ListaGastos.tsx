@@ -28,6 +28,8 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 
+import { useTranslation } from "react-i18next";
+
 interface ListaGastosProps {
   gastos: Gasto[];
   carregarDados: () => Promise<void>;
@@ -35,29 +37,50 @@ interface ListaGastosProps {
 
 export function ListaGastos({ gastos, carregarDados }: ListaGastosProps) {
   const [openId, setOpenId] = useState<string | null>(null);
+  const { t, i18n } = useTranslation();
+
+  const formatarMoeda = (valor: number) => {
+    const locale =
+      i18n.language === "pt"
+        ? "pt-BR"
+        : i18n.language.startsWith("de")
+          ? "de-DE"
+          : "en-US";
+    const moeda =
+      i18n.language === "pt"
+        ? "BRL"
+        : i18n.language.startsWith("de")
+          ? "EUR"
+          : "USD";
+
+    return new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency: moeda,
+    }).format(valor);
+  };
 
   // Cores adaptáveis de acordo com o tema (Evita sumir no claro)
   const getCategoriaStyle = (catId: string) => {
     if (["1", "3", "4"].includes(catId))
       return {
-        label: "Essencial",
+        label: t("lista_gastos.categorias.essencial"),
         color: "text-blue-600 dark:text-blue-400",
         dot: "bg-blue-600 dark:bg-blue-400",
       };
     if (["2", "5"].includes(catId))
       return {
-        label: "Desejo",
+        label: t("lista_gastos.categorias.desejo"),
         color: "text-rose-600 dark:text-rose-400",
         dot: "bg-rose-600 dark:bg-rose-400",
       };
     if (catId === "6")
       return {
-        label: "Investimento",
+        label: t("lista_gastos.categorias.investimento"),
         color: "text-green-600 dark:text-green-400",
         dot: "bg-green-600 dark:bg-green-400",
       };
     return {
-      label: "Outro",
+      label: t("lista_gastos.categorias.outro"),
       color: "text-muted-foreground",
       dot: "bg-muted-foreground",
     };
@@ -67,10 +90,10 @@ export function ListaGastos({ gastos, carregarDados }: ListaGastosProps) {
     try {
       await deletarGasto(id);
       await carregarDados();
-      toast.success("Gasto excluído com sucesso!");
+      toast.success(t("lista_gastos.sucesso_excluir"));
     } catch (err) {
       console.error("Erro ao excluir gasto:", err);
-      toast.error("Erro ao excluir gasto");
+      toast.error(t("lista_gastos.erro_excluir"));
     }
   };
 
@@ -88,7 +111,7 @@ export function ListaGastos({ gastos, carregarDados }: ListaGastosProps) {
     const valorNumber = Number(novoValor);
 
     if (isNaN(valorNumber)) {
-      toast.error("Valor inválido");
+      toast.error(t("lista_gastos.valor_invalido"));
       return;
     }
 
@@ -96,24 +119,24 @@ export function ListaGastos({ gastos, carregarDados }: ListaGastosProps) {
       await atualizarGasto(id, { valor: valorNumber });
 
       await carregarDados();
-      toast.success("Gasto atualizado com sucesso!");
+      toast.success(t("lista_gastos.sucesso_editar"));
 
       setOpenId(null);
     } catch (err) {
       console.error("Erro ao editar:", err);
-      toast.error("Erro ao atualizar gasto");
+      toast.error(t("lista_gastos.erro_editar"));
     }
   };
 
   return (
     <div className="w-full h-full flex flex-col space-y-4">
       <h3 className="font-bold border-b border-border pb-2 text-foreground">
-        Extrato de Gastos
+        {t("lista_gastos.titulo")}
       </h3>
 
       {gastos.length === 0 ? (
         <p className="text-sm opacity-60 italic text-muted-foreground">
-          Nenhum gasto encontrado.
+          {t("lista_gastos.sem_gastos")}
         </p>
       ) : (
         <div className="space-y-2 overflow-y-auto flex-1 pr-2 custom-scrollbar">
@@ -138,7 +161,7 @@ export function ListaGastos({ gastos, carregarDados }: ListaGastosProps) {
                       <span
                         className={`text-xs font-mono font-bold ${style.color}`}
                       >
-                        R$ {g.valor.toFixed(2)}
+                        {formatarMoeda(g.valor)}
                       </span>
                       <span className="text-[9px] text-muted-foreground uppercase font-bold tracking-tighter">
                         • {style.label}
@@ -163,9 +186,11 @@ export function ListaGastos({ gastos, carregarDados }: ListaGastosProps) {
                     <DialogContent className="sm:max-w-sm bg-background border-border text-foreground">
                       <form onSubmit={(e) => handleEdit(e, g.id)}>
                         <DialogHeader>
-                          <DialogTitle>Editar gasto</DialogTitle>
+                          <DialogTitle>
+                            {t("lista_gastos.editar_titulo")}
+                          </DialogTitle>
                           <DialogDescription className="mb-4 text-sm text-muted-foreground">
-                            Atualize o valor do gasto, digite apenas números.
+                            {t("lista_gastos.editar_descricao")}
                           </DialogDescription>
                         </DialogHeader>
                         <div>
@@ -187,14 +212,14 @@ export function ListaGastos({ gastos, carregarDados }: ListaGastosProps) {
                               variant="outline"
                               className="border-border text-foreground hover:bg-accent transition"
                             >
-                              Cancelar
+                              {t("lista_gastos.botao_cancelar")}
                             </Button>
                           </DialogClose>
                           <Button
                             className="bg-green-600 text-white hover:bg-green-700"
                             type="submit"
                           >
-                            Salvar alterações
+                            {t("lista_gastos.botao_salvar")}
                           </Button>
                         </DialogFooter>
                       </form>
@@ -212,24 +237,24 @@ export function ListaGastos({ gastos, carregarDados }: ListaGastosProps) {
                     <AlertDialogContent className="bg-background border-border text-foreground">
                       <AlertDialogHeader>
                         <AlertDialogTitle>
-                          Tem certeza que deseja excluir o gasto?
+                          {t("lista_gastos.excluir_titulo")}
                         </AlertDialogTitle>
 
                         <AlertDialogDescription className="text-muted-foreground">
-                          Essa ação não pode ser desfeita.
+                          {t("lista_gastos.excluir_descricao")}
                         </AlertDialogDescription>
                       </AlertDialogHeader>
 
                       <AlertDialogFooter>
                         <AlertDialogCancel className="border-border text-foreground hover:bg-accent transition">
-                          Cancelar
+                          {t("lista_gastos.botao_cancelar")}
                         </AlertDialogCancel>
 
                         <AlertDialogAction
                           onClick={() => handleDelete(g.id)}
                           className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                         >
-                          Excluir
+                          {t("lista_gastos.botao_excluir")}
                         </AlertDialogAction>
                       </AlertDialogFooter>
                     </AlertDialogContent>

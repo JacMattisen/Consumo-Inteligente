@@ -8,10 +8,12 @@ import { ListaRendimentos } from "./ListaRendimentos";
 import { BanknoteArrowDown, BanknoteArrowUp } from "lucide-react";
 import { GraficoConsumo } from "./Chart";
 import { Insights } from "./Insights";
+import { useTranslation } from "react-i18next";
 
 export default function DashboardController() {
   const [gastos, setGastos] = useState<Gasto[]>([]);
   const [rendimentos, setRendimentos] = useState<Rendimento[]>([]);
+  const { t } = useTranslation();
 
   // Carregar gastos
   const carregarGastos = useCallback(async () => {
@@ -45,7 +47,7 @@ export default function DashboardController() {
         {/* Card Cadastrar Renda */}
         <div className="p-6 rounded-2xl border border-border bg-card shadow-sm text-foreground ">
           <h2 className="text-lg font-semibold mb-4 text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
-            <BanknoteArrowDown size={20} /> Cadastrar Renda
+            <BanknoteArrowDown size={20} /> {t("cadastrar_renda")}
           </h2>
 
           <FormRendimentos onRendimentoCriado={carregarRendimentos} />
@@ -54,7 +56,7 @@ export default function DashboardController() {
         {/* Card Novo Gasto */}
         <div className="p-6 rounded-2xl border border-border bg-card shadow-sm text-foreground ">
           <h2 className="text-lg font-semibold mb-4 text-blue-600 dark:text-blue-400 flex items-center gap-2">
-            <BanknoteArrowUp size={20} /> Novo Gasto
+            <BanknoteArrowUp size={20} /> {t("novo_gasto")}
           </h2>
           <FormGasto onGastoCriado={carregarGastos} />
         </div>

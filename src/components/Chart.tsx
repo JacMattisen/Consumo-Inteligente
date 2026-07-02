@@ -8,6 +8,7 @@ import {
   Legend,
 } from "recharts";
 import type { Gasto } from "../tipos/tipos"; // Importe o seu tipo de Gasto
+import { useTranslation } from "react-i18next";
 
 // Propriedade para receber a lista atualizada do Dashboard
 interface GraficoConsumoProps {
@@ -17,6 +18,7 @@ interface GraficoConsumoProps {
 const COLORS = ["#2563eb", "#db2777", "#16a34a"];
 
 export function GraficoConsumo({ gastos }: GraficoConsumoProps) {
+  const { t, i18n } = useTranslation();
   const [dadosGrafico, setDadosGrafico] = useState<
     { name: string; value: number }[]
   >([]);
@@ -24,6 +26,27 @@ export function GraficoConsumo({ gastos }: GraficoConsumoProps) {
     descricao: string;
     valor: number;
   } | null>(null);
+
+  // Conversão de moeda
+  const formatarMoeda = (valor: number) => {
+    const locale =
+      i18n.language === "pt"
+        ? "pt-BR"
+        : i18n.language.startsWith("de")
+          ? "de-DE"
+          : "en-US";
+    const moeda =
+      i18n.language === "pt"
+        ? "BRL"
+        : i18n.language.startsWith("de")
+          ? "EUR"
+          : "USD";
+
+    return new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency: moeda,
+    }).format(valor);
+  };
 
   useEffect(() => {
     if (!gastos || gastos.length === 0) {
@@ -52,32 +75,29 @@ export function GraficoConsumo({ gastos }: GraficoConsumoProps) {
       .reduce((soma, g) => soma + g.valor, 0);
 
     const novosDados = [
-      { name: "Essenciais (50%)", value: totalEssenciais },
-      { name: "Desejos (30%)", value: totalDesejos },
-      { name: "Reserva (20%)", value: totalReserva },
+      { name: t("grafico_consumo.essenciais"), value: totalEssenciais },
+      { name: t("grafico_consumo.desejos"), value: totalDesejos },
+      { name: t("grafico_consumo.reserva"), value: totalReserva },
     ];
 
     setDadosGrafico(novosDados.filter((d) => d.value > 0));
-  }, [gastos]); // Agora ele recalcula instantaneamente quando a lista de gastos mudar!
+  }, [gastos, t]); // Agora ele recalcula instantaneamente quando a lista de gastos mudar! e tem quando mudar o idioma
 
   return (
     <div className="w-full h-full flex flex-col items-center text-foreground">
       <h3 className="text-center font-bold mb-2 text-foreground">
-        Visão 50-30-20
+        {t("grafico_consumo.titulo")}
       </h3>
 
       {maiorGasto && (
         <div className="mb-4 p-3 bg-accent/40 rounded-lg border border-border text-center w-full transition-colors">
           <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
-            Maior Gasto Detectado
+            {t("grafico_consumo.maior_gasto")}
           </p>
           <p className="text-sm font-bold text-foreground">
             {maiorGasto.descricao}:{" "}
             <span className="text-destructive font-mono font-bold">
-              {maiorGasto.valor.toLocaleString("pt-BR", {
-                style: "currency",
-                currency: "BRL",
-              })}
+              {formatarMoeda(maiorGasto.valor)}
             </span>
           </p>
         </div>
@@ -104,6 +124,7 @@ export function GraficoConsumo({ gastos }: GraficoConsumoProps) {
               ))}
             </Pie>
             <Tooltip
+              formatter={(value: number) => [formatarMoeda(value), ""]}
               contentStyle={{
                 backgroundColor: "var(--popover)",
                 border: "1px solid var(--border)",

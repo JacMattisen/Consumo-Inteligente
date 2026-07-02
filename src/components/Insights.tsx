@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import { getGastos, getRendimentos } from "../service/consumo";
 import type { Gasto, Rendimento } from "../tipos/tipos";
 import { ChessQueen, House, Lightbulb, PiggyBank } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import i18n from "@/i18n";
 
 export function Insights() {
   const [gastos, setGastos] = useState<Gasto[]>([]);
   const [rendimentos, setRendimentos] = useState<Rendimento[]>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     async function carregarDados() {
@@ -38,6 +41,27 @@ export function Insights() {
   const limite30 = totalRecebido * 0.3;
   const meta20 = totalRecebido * 0.2;
 
+  //descobre se deve exibir R$, $ ou € baseado na bandeira
+  const formatarMoeda = (valor: number) => {
+    const locale =
+      i18n.language === "pt"
+        ? "pt-BR"
+        : i18n.language.startsWith("de")
+          ? "de-DE"
+          : "en-US";
+    const moeda =
+      i18n.language === "pt"
+        ? "BRL"
+        : i18n.language.startsWith("de")
+          ? "EUR"
+          : "USD";
+
+    return new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency: moeda,
+    }).format(valor);
+  };
+
   return (
     <div
       className="p-5 rounded-xl shadow-lg space-y-6 transition-colors"
@@ -60,9 +84,7 @@ export function Insights() {
       </div>
 
       {totalRecebido === 0 ? (
-        <p className="text-gray-500 italic">
-          Cadastre sua renda para organizar seus pilares financeiros.
-        </p>
+        <p className="text-gray-500 italic">{t("insights.sem_renda")}</p>
       ) : (
         <>
           <div className="space-y-4">
@@ -77,7 +99,7 @@ export function Insights() {
               <div className="flex items-center gap-2">
                 <House size={20} className="text-gray-800" />
                 <h4 className="text-gray-600 font-semibold text-sm">
-                  Essenciais (50%)
+                  {t("insights.essenciais")}
                 </h4>
               </div>
 
@@ -87,21 +109,15 @@ export function Insights() {
                   color: totalEssenciais > limite50 ? "#f60e0e" : "#39ff14",
                 }}
               >
-                {totalEssenciais.toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
+                {formatarMoeda(totalEssenciais)}
+
                 <span className="text-gray-800 text-xs italic ml-1">
-                  / limite de{" "}
-                  {limite50.toLocaleString("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}
+                  {t("insights.limite_de")} {formatarMoeda(limite50)}
                 </span>
               </p>
               {totalEssenciais > limite50 && (
                 <p className="text-[10px] text-[#f60e0e] font-bold mt-1">
-                  ⚠️ Reduza gastos básicos!
+                  {t("insights.aviso_essenciais")}
                 </p>
               )}
             </div>
@@ -117,7 +133,7 @@ export function Insights() {
               <div className="flex items-center gap-2">
                 <ChessQueen size={20} className="text-gray-800" />
                 <h4 className="text-gray-600 font-semibold text-sm">
-                  Estilo de Vida (30%)
+                  {t("insights.estilo_vida")}
                 </h4>
               </div>
 
@@ -127,21 +143,14 @@ export function Insights() {
                   color: totalDesejos > limite30 ? "#eab308" : "#10A310",
                 }}
               >
-                {totalDesejos.toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
+                {formatarMoeda(totalDesejos)}
                 <span className="text-gray-800 text-xs italic ml-1">
-                  / limite de{" "}
-                  {limite30.toLocaleString("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}
+                  {t("insights.limite_de")} {formatarMoeda(limite30)}
                 </span>
               </p>
               {totalDesejos > limite30 && (
                 <p className="text-[10px] text-[#eab308] font-bold mt-1">
-                  ⚠️ Controle seus desejos momentâneos!
+                  {t("insights.aviso_desejos")}
                 </p>
               )}
             </div>
@@ -157,7 +166,7 @@ export function Insights() {
               <div className="flex items-center gap-2">
                 <PiggyBank size={20} className="text-gray-800" />
                 <h4 className="text-gray-600 font-semibold text-sm">
-                  Futuro e Reserva (20%)
+                  {t("insights.futuro_reserva")}
                 </h4>
               </div>
 
@@ -167,16 +176,9 @@ export function Insights() {
                   color: saldoAtualParaOFuturo < meta20 ? "#ff8c00" : "#39ff14",
                 }}
               >
-                {saldoAtualParaOFuturo.toLocaleString("pt-BR", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
+                {formatarMoeda(saldoAtualParaOFuturo)}
                 <span className="text-gray-800 text-xs italic ml-1">
-                  / meta de{" "}
-                  {meta20.toLocaleString("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                  })}
+                  {t("insights.meta_de")} {formatarMoeda(meta20)}
                 </span>
               </p>
               <p
@@ -187,38 +189,35 @@ export function Insights() {
                 }}
               >
                 {saldoAtualParaOFuturo >= meta20
-                  ? "✅ No caminho certo para a liberdade!"
-                  : "📉 Tente poupar um pouco mais."}
+                  ? t("insights.sucesso_futuro")
+                  : t("insights.aviso_futuro")}
               </p>
             </div>
           </div>
 
           <div className="mt-6 pt-4 border-t border-slate-700 space-y-3">
             <h3 className="text-white text-xs font-bold uppercase tracking-wider text-center opacity-70">
-              Entenda o Método
+              {t("insights.entenda_metodo")}
             </h3>
 
             <div className="space-y-2 text-[11px] leading-relaxed">
               <p className="text-gray-400">
                 <strong className="text-blue-400">
-                  50% - Necessidades (Gastos Essenciais):
+                  {t("insights.essenciais")}:
                 </strong>{" "}
-                Moradia (aluguel/condomínio), conta de luz, água, gás,
-                supermercado, transporte, plano de saúde e educação.
+                {t("insights.desc_essenciais")}
               </p>
               <p className="text-gray-400">
                 <strong className="text-pink-400">
-                  30% - Desejos (Gastos Variáveis):
+                  {t("insights.estilo_vida")}:
                 </strong>{" "}
-                Assinaturas (Netflix, Spotify), restaurantes, salão de beleza,
-                compras não essenciais, viagens e hobbies.
+                {t("insights.desc_desejos")}
               </p>
               <p className="text-gray-400">
                 <strong className="text-green-400">
-                  20% - Futuro (Prioridades):
+                  {t("insights.futuro_reserva")}:
                 </strong>{" "}
-                Reserva de emergência, pagamento de dívidas, aportes em
-                investimentos (ações, tesouro direto, previdência).
+                {t("insights.desc_futuro")}
               </p>
             </div>
           </div>

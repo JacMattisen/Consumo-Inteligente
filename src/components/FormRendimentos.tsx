@@ -3,6 +3,7 @@ import { criarRendimento } from "../service/consumo";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Button } from "./ui/button";
+import { useTranslation } from "react-i18next";
 
 interface FormRendimentosProps {
   onRendimentoCriado: () => Promise<void>;
@@ -11,14 +12,13 @@ interface FormRendimentosProps {
 export function FormRendimentos({ onRendimentoCriado }: FormRendimentosProps) {
   const [descricao, setDescricao] = useState<string>("");
   const [valor, setValor] = useState<number>(0);
+  const { t } = useTranslation();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!descricao || valor <= 0) {
-      toast.warning(
-        "Por favor, insira um valor de renda válido e preencha todos os campos.",
-      );
+      toast.warning(t("form_rendimentos.aviso_campos"));
       return;
     }
 
@@ -31,13 +31,13 @@ export function FormRendimentos({ onRendimentoCriado }: FormRendimentosProps) {
       await criarRendimento(novoRendimento);
       await onRendimentoCriado();
       console.log("Renda adicionada com sucesso");
-      toast.success("Renda adicionada com sucesso");
+      toast.success(t("form_rendimentos.sucesso"));
 
       setDescricao("");
       setValor(0);
     } catch (error) {
       console.error("Erro ao adicionar renda", error);
-      toast.error("Erro ao criar renda");
+      toast.error(t("form_rendimentos.erro"));
     }
   };
 
@@ -58,35 +58,35 @@ export function FormRendimentos({ onRendimentoCriado }: FormRendimentosProps) {
             hidden
             className="bg-background text-muted-foreground"
           >
-            Selecione a categoria de rendimento
+            {t("form_rendimentos.selecione_categoria")}
           </option>
 
           <option value="Salário" className="bg-background text-foreground">
-            Salário
+            {t("form_rendimentos.opcoes.salario")}
           </option>
           <option value="Renda Extra" className="bg-background text-foreground">
-            Renda Extra
+            {t("form_rendimentos.opcoes.renda_extra")}
           </option>
           <option
             value="Investimentos"
             className="bg-background text-foreground"
           >
-            Rendimentos
+            {t("form_rendimentos.opcoes.investimentos")}
           </option>
           <option
             value="Reserva/Poupança"
             className="bg-background text-foreground"
           >
-            Reserva/Poupança
+            {t("form_rendimentos.opcoes.reserva")}
           </option>
           <option value="Outros" className="bg-background text-foreground">
-            Outros
+            {t("form_rendimentos.opcoes.outros")}
           </option>
         </select>
 
         <Input
           type="number"
-          placeholder="Valor (R$)"
+          placeholder={t("form_rendimentos.placeholder_valor")}
           value={valor || ""}
           onChange={(e) => setValor(Number(e.target.value))}
           className="bg-transparent border-border text-foreground w-full"
@@ -97,11 +97,11 @@ export function FormRendimentos({ onRendimentoCriado }: FormRendimentosProps) {
         type="submit"
         className="w-full font-bold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
       >
-        Adicionar Renda
+        {t("form_rendimentos.botao_adicionar")}
       </Button>
 
       <p className="text-[10px] text-muted-foreground italic">
-        * A soma das rendas define seus limites de 50%, 30% e 20%.
+        {t("form_rendimentos.nota_limites")}
       </p>
     </form>
   );
