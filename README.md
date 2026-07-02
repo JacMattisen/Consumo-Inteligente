@@ -83,6 +83,7 @@ consumoInteligente/
     ├── App.tsx         # Root component and layout structure
     ├── main.tsx        # Application entry point
     └── index.css       # Global styles and theme variables
+```
 ## 🔮 Future Implementations
 
 The project was conceived to be the foundation of a complete financial ecosystem. We plan to expand the platform's capabilities with:
