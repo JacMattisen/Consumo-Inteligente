@@ -7,12 +7,16 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import { getGastos } from "../service/consumo";
+import type { Gasto } from "../tipos/tipos"; // Importe o seu tipo de Gasto
 
-// Cores
-const COLORS = ["#3b82f6", "#ec4899", "#eab308"]; // Essencial, Desejos, Reserva
+// Propriedade para receber a lista atualizada do Dashboard
+interface GraficoConsumoProps {
+  gastos: Gasto[];
+}
 
-export function GraficoConsumo() {
+const COLORS = ["#2563eb", "#db2777", "#16a34a"];
+
+export function GraficoConsumo({ gastos }: GraficoConsumoProps) {
   const [dadosGrafico, setDadosGrafico] = useState<
     { name: string; value: number }[]
   >([]);
@@ -22,60 +26,54 @@ export function GraficoConsumo() {
   } | null>(null);
 
   useEffect(() => {
-    async function prepararDados() {
-      const gastosApi = await getGastos();
-
-      if (gastosApi.length === 0) return;
-
-      // Onde está gastando mais?
-      const maior = gastosApi.reduce((prev, current) =>
-        prev.valor > current.valor ? prev : current,
-      );
-      setMaiorGasto({ descricao: maior.descricao, valor: maior.valor });
-
-      // 2. Agrupar pela Lógica 50-30-20
-      // IDs: 1-Alimentação, 3-Saúde, 4-Contas (Essenciais)
-      const totalEssenciais = gastosApi
-        .filter((g) => ["1", "3", "4"].includes(g.categoria))
-        .reduce((soma, g) => soma + g.valor, 0);
-
-      // IDs: 2-Lazer, 5-Outros (Desejos)
-      const totalDesejos = gastosApi
-        .filter((g) => ["2", "5"].includes(g.categoria))
-        .reduce((soma, g) => soma + g.valor, 0);
-
-      // ID: 6 - Poupança/Investimentos
-      const totalReserva = gastosApi
-        .filter((g) => g.categoria === "6")
-        .reduce((soma, g) => soma + g.valor, 0);
-
-      // gráfico
-      const novosDados = [
-        { name: "Essenciais (50%)", value: totalEssenciais },
-        { name: "Desejos (30%)", value: totalDesejos },
-        { name: "Reserva (20%)", value: totalReserva },
-      ];
-
-      // Filtra grupos que não possuem gastos ainda para não bugar o gráfico
-      setDadosGrafico(novosDados.filter((d) => d.value > 0));
+    if (!gastos || gastos.length === 0) {
+      setDadosGrafico([]);
+      setMaiorGasto(null);
+      return;
     }
 
-    prepararDados();
-  }, []);
+    // 1. O que mais pesa no bolso
+    const maior = gastos.reduce((prev, current) =>
+      prev.valor > current.valor ? prev : current,
+    );
+    setMaiorGasto({ descricao: maior.descricao, valor: maior.valor });
+
+    // 2. Agrupar pela Lógica 50-30-20
+    const totalEssenciais = gastos
+      .filter((g) => ["1", "3", "4"].includes(g.categoria))
+      .reduce((soma, g) => soma + g.valor, 0);
+
+    const totalDesejos = gastos
+      .filter((g) => ["2", "5"].includes(g.categoria))
+      .reduce((soma, g) => soma + g.valor, 0);
+
+    const totalReserva = gastos
+      .filter((g) => g.categoria === "6")
+      .reduce((soma, g) => soma + g.valor, 0);
+
+    const novosDados = [
+      { name: "Essenciais (50%)", value: totalEssenciais },
+      { name: "Desejos (30%)", value: totalDesejos },
+      { name: "Reserva (20%)", value: totalReserva },
+    ];
+
+    setDadosGrafico(novosDados.filter((d) => d.value > 0));
+  }, [gastos]); // Agora ele recalcula instantaneamente quando a lista de gastos mudar!
 
   return (
-    <div className="w-full h-full flex flex-col items-center">
-      <h3 className="text-center font-bold mb-2">Visão 50-30-20</h3>
+    <div className="w-full h-full flex flex-col items-center text-foreground">
+      <h3 className="text-center font-bold mb-2 text-foreground">
+        Visão 50-30-20
+      </h3>
 
-      {/* maior gasto individual */}
       {maiorGasto && (
-        <div className="mb-4 p-2 bg-slate-800/50 rounded-lg border border-slate-700 text-center w-full">
-          <p className="text-[10px] uppercase tracking-wider text-white">
+        <div className="mb-4 p-3 bg-accent/40 rounded-lg border border-border text-center w-full transition-colors">
+          <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">
             Maior Gasto Detectado
           </p>
-          <p className="text-sm font-bold text-white">
+          <p className="text-sm font-bold text-foreground">
             {maiorGasto.descricao}:{" "}
-            <span className="text-red-600">
+            <span className="text-destructive font-mono font-bold">
               {maiorGasto.valor.toLocaleString("pt-BR", {
                 style: "currency",
                 currency: "BRL",
@@ -85,7 +83,7 @@ export function GraficoConsumo() {
         </div>
       )}
 
-      <div className="w-full h-[450px]">
+      <div className="w-full h-112.5">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
@@ -107,14 +105,18 @@ export function GraficoConsumo() {
             </Pie>
             <Tooltip
               contentStyle={{
-                backgroundColor: "#1e293b",
-                border: "none",
-                borderRadius: "8px",
-                color: "#fff",
+                backgroundColor: "var(--popover)",
+                border: "1px solid var(--border)",
+                borderRadius: "var(--radius)",
+                color: "var(--popover-foreground)",
               }}
-              itemStyle={{ color: "#fff" }}
+              itemStyle={{ color: "var(--popover-foreground)" }}
             />
-            <Legend verticalAlign="bottom" height={36} />
+            <Legend
+              verticalAlign="bottom"
+              height={36}
+              wrapperStyle={{ color: "var(--foreground)" }}
+            />
           </PieChart>
         </ResponsiveContainer>
       </div>

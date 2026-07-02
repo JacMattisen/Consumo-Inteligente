@@ -20,7 +20,7 @@ export function Navbar() {
       {/* Logo */}
       <div className="flex items-center gap-2 text-blue-500">
         <Brain size={28} />
-        <span className="text-white px-3 py-1 font-size:20px">
+        <span className="hover:text-blue-500 transition-colors p-2 rounded-full">
           Smart Finance
         </span>
       </div>

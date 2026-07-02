@@ -1,23 +1,24 @@
 import { useState } from "react";
 import { criarRendimento } from "../service/consumo";
 import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
+import { Button } from "./ui/button";
 
 interface FormRendimentosProps {
   onRendimentoCriado: () => Promise<void>;
 }
 
-export function FormRendimentos({
-  onRendimentoCriado
-}: FormRendimentosProps) {
-
+export function FormRendimentos({ onRendimentoCriado }: FormRendimentosProps) {
   const [descricao, setDescricao] = useState<string>("");
   const [valor, setValor] = useState<number>(0);
 
-  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!descricao || valor <= 0) {
-      toast.warning("Por favor, insira um valor de renda válido e preecha todos os campos.");
+      toast.warning(
+        "Por favor, insira um valor de renda válido e preencha todos os campos.",
+      );
       return;
     }
 
@@ -43,44 +44,63 @@ export function FormRendimentos({
   return (
     <form onSubmit={handleSubmit} className="mt-6 space-y-4">
       <div className="flex flex-col gap-2">
-        {/* Select para escolher o tipo de renda */}
         <select
           className={`
-            bg-white text-black p-2 rounded border border-gray-300 w-full
-            ${descricao === "" ? "text-gray-400" : "text-black"}
-            `}
+            p-2 rounded border border-border w-full bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring
+            ${descricao === "" ? "text-muted-foreground" : "text-foreground"}
+          `}
           value={descricao}
           onChange={(e) => setDescricao(e.target.value)}
         >
-          <option value="" disabled hidden>
+          <option
+            value=""
+            disabled
+            hidden
+            className="bg-background text-muted-foreground"
+          >
             Selecione a categoria de rendimento
           </option>
 
-          <option value="Salário">Salário</option>
-          <option value="Renda Extra">Renda Extra</option>
-          <option value="Investimentos">Rendimentos</option>
-          <option value="Reserva/Poupança">Reserva/Poupança</option>
-          <option value="Outros">Outros</option>
+          <option value="Salário" className="bg-background text-foreground">
+            Salário
+          </option>
+          <option value="Renda Extra" className="bg-background text-foreground">
+            Renda Extra
+          </option>
+          <option
+            value="Investimentos"
+            className="bg-background text-foreground"
+          >
+            Rendimentos
+          </option>
+          <option
+            value="Reserva/Poupança"
+            className="bg-background text-foreground"
+          >
+            Reserva/Poupança
+          </option>
+          <option value="Outros" className="bg-background text-foreground">
+            Outros
+          </option>
         </select>
 
-        {/* Input de Valor */}
-        <input
+        <Input
           type="number"
-          className="bg-white text-black p-2 rounded border border-gray-300 w-full"
           placeholder="Valor (R$)"
           value={valor || ""}
           onChange={(e) => setValor(Number(e.target.value))}
+          className="bg-transparent border-border text-foreground w-full"
         />
       </div>
-      
-      <button
+
+      <Button
         type="submit"
-        className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-pink-600 transition w-full font-bold"
+        className="w-full font-bold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
       >
         Adicionar Renda
-      </button>
+      </Button>
 
-      <p className="text-[10px] text-white-700 italic">
+      <p className="text-[10px] text-muted-foreground italic">
         * A soma das rendas define seus limites de 50%, 30% e 20%.
       </p>
     </form>

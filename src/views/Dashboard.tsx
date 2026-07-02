@@ -14,11 +14,11 @@ export default function Dashboard() {
             Gerencie seu dinheiro com inteligência.
           </p>
         </div>
-        
+
         {/* Chama DashboardController com os forms de inputs e outputs */}
-          <div className="lg:col-span-1 p-6 rounded-2xl bg-slate-900/40 shadow-inner">
-            <DashboardController />
-          </div>
+        <div className="lg:col-span-1 p-6 rounded-2xl shadow-inner">
+          <DashboardController />
+        </div>
       </main>
       <Footer />
     </div>

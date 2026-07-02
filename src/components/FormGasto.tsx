@@ -2,25 +2,26 @@ import { useState } from "react";
 import { categorias } from "../constantes/categorias";
 import { criarGasto } from "../service/consumo";
 import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
+import { Button } from "./ui/button";
 
 interface FormGastoProps {
   onGastoCriado: () => Promise<void>;
 }
 
-export function FormGasto({
-  onGastoCriado
-}: FormGastoProps) {
-
+export function FormGasto({ onGastoCriado }: FormGastoProps) {
   const [descricao, setDescricao] = useState<string>("");
   const [valor, setValor] = useState<number>(0);
   const [categoria, setCategoria] = useState<string>("");
 
-  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Verificação para não enviar vazio
-    if (!descricao || valor <= 0) {
-        toast.warning("Por favor, insira um valor de gasto válido e preecha todos os campos.");
+    // Verificação para não enviar vazio ou inválido
+    if (!descricao || valor <= 0 || !categoria) {
+      toast.warning(
+        "Por favor, preencha todos os campos e insira um valor válido.",
+      );
       return;
     }
 
@@ -32,7 +33,7 @@ export function FormGasto({
     };
 
     try {
-      await criarGasto(novoGasto); //Chama POST de gastos
+      await criarGasto(novoGasto); // Chama POST de gastos
       await onGastoCriado();
       toast.success("Gasto criado com sucesso");
 
@@ -40,7 +41,6 @@ export function FormGasto({
       setDescricao("");
       setValor(0);
       setCategoria("");
-
     } catch (error) {
       console.error("Erro ao criar gasto", error);
       toast.error("Erro ao criar gasto");
@@ -49,9 +49,8 @@ export function FormGasto({
 
   return (
     <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-      {/* DESCRIÇÃO */}
-      <input
-        className="bg-white text-black p-2 rounded border border-gray-300 w-full"
+      <Input
+        className="bg-transparent border-border text-foreground w-full"
         placeholder="Descrição (ex: Aluguel)"
         value={descricao}
         onChange={(e) => setDescricao(e.target.value)}
@@ -59,9 +58,9 @@ export function FormGasto({
 
       {/* LINHA 2 */}
       <div className="flex gap-2">
-        <input
+        <Input
           type="number"
-          className="bg-white text-black p-2 rounded border border-gray-300 w-1/2"
+          className="bg-transparent border-border text-foreground w-1/2"
           placeholder="Valor (R$)"
           value={valor || ""}
           onChange={(e) => setValor(Number(e.target.value))}
@@ -69,30 +68,39 @@ export function FormGasto({
 
         <select
           className={`
-              bg-white text-black p-2 rounded border border-gray-300 w-1/2 
-              ${categoria === "" ? "text-gray-400" : "text-black"}
-            `}
+            p-2 rounded border border-border w-1/2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring
+            ${categoria === "" ? "text-muted-foreground" : "text-foreground"}
+          `}
           value={categoria}
           onChange={(e) => setCategoria(e.target.value)}
         >
-          <option value="" disabled hidden>
+          <option
+            value=""
+            disabled
+            hidden
+            className="bg-background text-muted-foreground"
+          >
             Selecione uma categoria
           </option>
 
           {categorias.map((cat) => (
-            <option key={cat.id} value={cat.id}>
+            <option
+              key={cat.id}
+              value={cat.id}
+              className="bg-background text-foreground"
+            >
               {cat.descricao}
             </option>
           ))}
         </select>
       </div>
-      
-      <button
+
+      <Button
         type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition w-full font-bold"
+        className="w-full font-bold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
       >
         Adicionar Gasto
-      </button>
+      </Button>
     </form>
   );
 }

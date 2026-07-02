@@ -39,12 +39,24 @@ export function Insights() {
   const meta20 = totalRecebido * 0.2;
 
   return (
-    <div className="p-5 bg-[#1a1a1a] rounded-xl shadow-lg space-y-6">
+    <div
+      className="p-5 rounded-xl shadow-lg space-y-6 transition-colors"
+      style={{
+        backgroundColor: "var(--card-bg)",
+        borderColor: "var(--border-color)",
+        borderWidth: "1px",
+      }}
+    >
       <div className="flex items-center gap-2">
-        <Lightbulb size={20} className="text-gray-300" />
-        <h2 className="text-white text-xl font-bold flex items-center gap-2">
-          50-30-20
-        </h2>
+        <div className="flex items-center gap-2">
+          <Lightbulb size={20} style={{ color: "var(--text-secondary)" }} />
+          <h2
+            className="text-xl font-bold flex items-center gap-2"
+            style={{ color: "var(--text-primary)" }}
+          >
+            50-30-20
+          </h2>
+        </div>
       </div>
 
       {totalRecebido === 0 ? (
@@ -56,15 +68,15 @@ export function Insights() {
           <div className="space-y-4">
             {/* GRUPO 50% - NECESSIDADES */}
             <div
-              className="p-4 bg-[#2a2a2a] rounded-lg border-l-4"
+              className="p-4 rounded-lg border-l-4 transition-colors bg-sky-100/70 dark:bg-[#1a1a1a]"
               style={{
                 borderLeftColor:
-                  totalEssenciais > limite50 ? "#ff4d4d" : "#3b82f6",
+                  totalEssenciais > limite50 ? "#f60e0e" : "#3b82f6",
               }}
             >
               <div className="flex items-center gap-2">
-                <House size={20} className="text-gray-300" />
-                <h4 className="text-gray-300 font-semibold text-sm">
+                <House size={20} className="text-gray-800" />
+                <h4 className="text-gray-600 font-semibold text-sm">
                   Essenciais (50%)
                 </h4>
               </div>
@@ -72,14 +84,14 @@ export function Insights() {
               <p
                 className="text-base"
                 style={{
-                  color: totalEssenciais > limite50 ? "#ff4d4d" : "#4dff4d",
+                  color: totalEssenciais > limite50 ? "#f60e0e" : "#39ff14",
                 }}
               >
                 {totalEssenciais.toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}
-                <span className="text-gray-500 text-xs italic ml-1">
+                <span className="text-gray-800 text-xs italic ml-1">
                   / limite de{" "}
                   {limite50.toLocaleString("pt-BR", {
                     style: "currency",
@@ -88,7 +100,7 @@ export function Insights() {
                 </span>
               </p>
               {totalEssenciais > limite50 && (
-                <p className="text-[10px] text-[#ff4d4d] font-bold mt-1">
+                <p className="text-[10px] text-[#f60e0e] font-bold mt-1">
                   ⚠️ Reduza gastos básicos!
                 </p>
               )}
@@ -96,15 +108,15 @@ export function Insights() {
 
             {/* GRUPO 30% - DESEJOS */}
             <div
-              className="p-4 bg-[#2a2a2a] rounded-lg border-l-4"
+              className="p-4 rounded-lg border-l-4 transition-colors bg-sky-100/70 dark:bg-[#1a1a1a]"
               style={{
                 borderLeftColor:
                   totalDesejos > limite30 ? "#eab308" : "#ec4899",
               }}
             >
               <div className="flex items-center gap-2">
-                <ChessQueen size={20} className="text-gray-300" />
-                <h4 className="text-gray-300 font-semibold text-sm">
+                <ChessQueen size={20} className="text-gray-800" />
+                <h4 className="text-gray-600 font-semibold text-sm">
                   Estilo de Vida (30%)
                 </h4>
               </div>
@@ -112,14 +124,14 @@ export function Insights() {
               <p
                 className="text-base"
                 style={{
-                  color: totalDesejos > limite30 ? "#eab308" : "#4dff4d",
+                  color: totalDesejos > limite30 ? "#eab308" : "#10A310",
                 }}
               >
                 {totalDesejos.toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}
-                <span className="text-gray-500 text-xs italic ml-1">
+                <span className="text-gray-800 text-xs italic ml-1">
                   / limite de{" "}
                   {limite30.toLocaleString("pt-BR", {
                     style: "currency",
@@ -136,15 +148,15 @@ export function Insights() {
 
             {/* GRUPO 20% - FUTURO */}
             <div
-              className="p-4 bg-[#2a2a2a] rounded-lg border-l-4"
+              className="p-4 rounded-lg border-l-4 transition-colors bg-sky-100/70 dark:bg-[#1a1a1a]"
               style={{
                 borderLeftColor:
-                  saldoAtualParaOFuturo < meta20 ? "#ff8c00" : "#22c55e",
+                  saldoAtualParaOFuturo < meta20 ? "#ff8c00" : "#10A310",
               }}
             >
               <div className="flex items-center gap-2">
-                <PiggyBank size={20} className="text-gray-300" />
-                <h4 className="text-gray-300 font-semibold text-sm">
+                <PiggyBank size={20} className="text-gray-800" />
+                <h4 className="text-gray-600 font-semibold text-sm">
                   Futuro e Reserva (20%)
                 </h4>
               </div>
@@ -152,14 +164,14 @@ export function Insights() {
               <p
                 className="text-base"
                 style={{
-                  color: saldoAtualParaOFuturo < meta20 ? "#ff8c00" : "#4dff4d",
+                  color: saldoAtualParaOFuturo < meta20 ? "#ff8c00" : "#39ff14",
                 }}
               >
                 {saldoAtualParaOFuturo.toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL",
                 })}
-                <span className="text-gray-500 text-xs italic ml-1">
+                <span className="text-gray-800 text-xs italic ml-1">
                   / meta de{" "}
                   {meta20.toLocaleString("pt-BR", {
                     style: "currency",
@@ -171,7 +183,7 @@ export function Insights() {
                 className="text-[10px] font-bold mt-1"
                 style={{
                   color:
-                    saldoAtualParaOFuturo >= meta20 ? "#4dff4d" : "#ff8c00",
+                    saldoAtualParaOFuturo >= meta20 ? "#39ff14" : "#ff8c00",
                 }}
               >
                 {saldoAtualParaOFuturo >= meta20
