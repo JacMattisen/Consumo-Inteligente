@@ -2,20 +2,30 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-import pt from "./pt.json";
-import en from "./en.json";
-import de from "./de.json";
+import ptTranslations from "./pt.json";
+import enTranslations from "./en.json";
+import deTranslations from "./de.json";
 
 i18n
   .use(LanguageDetector) // Detecta o idioma do navegador automaticamente
   .use(initReactI18next) // Conecta com o React
   .init({
     resources: {
-      pt: { translation: pt },
-      en: { translation: en },
-      de: { translation: de },
+      pt: { translation: ptTranslations },
+      en: { translation: enTranslations },
+      de: { translation: deTranslations },
     },
-    fallbackLng: "pt", // Se não detectar, usa português
+    fallbackLng: "en", // Se não detectar, usa inglês
+
+    detection: {
+      // Ordem de onde ele vai tentar buscar o idioma do usuário:
+
+      order: ["localStorage", "navigator"],
+
+      // O nome da chave que ele vai criar no localStorage para guardar a escolha
+      caches: ["localStorage"],
+    },
+
     interpolation: {
       escapeValue: false,
     },
