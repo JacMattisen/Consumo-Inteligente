@@ -1,151 +1,136 @@
 # 💰 Smart finance 50-30-20
 
-O **Smart finance** é um dashboard de gestão financeira pessoal que aplica automaticamente o método **50-30-20**. Diferente de uma simples lista de gastos, o sistema educa o usuário sobre sua saúde financeira, distribuindo rendas e despesas em pilares estratégicos.
+**Smart finance** is a personal financial management dashboard that automatically applies the **50-30-20 rule**. Unlike a simple expense list, the system educates users about their financial health by distributing income and expenses into strategic pillars.
 
----
+## 🚀 Features
 
-## 🚀 Funcionalidades
+- **Income Management:** Register salary and extra income for dynamic budget calculation.
+- **Expense Logging:** Register expenses with smart categorization linked to the financial rule.
+- **50-30-20 Insights:** A real-time dashboard that monitors whether you are within limits:
+    - **50% (Needs):** Housing, health, and food.
+    - **30% (Wants):** Leisure, hobbies, and personal desires.
+    - **20% (Savings):** Emergency fund and investments.
+- **Evolution Chart:** Clear visualization of expense distribution through dynamic donut charts.
+- **Smart Statement:** Expense and income lists featuring quick editing capabilities and visual indicators for each pillar.
+- **🌍 Internationalization (i18n):** Complete multi-language support (English, Portuguese, and German).
+- **💱 Multi-currency Support:** Automatic currency formatting (R$, $, and €) dynamically matching the active interface language.
 
-- **Gestão de Rendas:** Cadastro de salário e rendas extras para cálculo dinâmico de orçamento.
-- **Lançamento de Gastos:** Cadastro de despesas com categorização inteligente vinculada à regra financeira.
-- **Insights 50-30-20:** Painel que monitora em tempo real se você está dentro dos limites:
-  - **50% (Essenciais):** Moradia, saúde e alimentação.
-  - **30% (Estilo de Vida):** Lazer, hobbies e desejos.
-  - **20% (Futuro):** Reserva de emergência e investimentos.
-- **Gráfico de Evolução:** Visualização clara da distribuição dos gastos através de gráficos de rosca dinâmicos.
-- **Extrato Inteligente:** Lista de gastos com indicadores visuais por pilar.
+## 🛠️ Technologies Used
 
----
-
-## 🛠️ Tecnologias Utilizadas
-
-- **React.js**
-- **TSX**
+- **React.js** & **TypeScript (TSX)**
 - **Vite**
-- **Node**
-- **shadcn/Radix**
-- **Tailwind/CSS**
-- **Lucide React**
-- **Recharts**
-- **MockAPI**
+- **Node.js**
+- **shadcn/ui** (Radix UI)
+- **Tailwind CSS**
+- **Lucide React** (Icons)
+- **Recharts** (Interactive Data Visualization)
+- **i18next** & **react-i18next** (Internationalization Framework)
+- **Sonner** (Toast notifications)
+- **MockAPI** (Rest API backend simulation)
 
----
+## 📈 The 50-30-20 Rule
 
-## 📈 O Método 50-30-20
+The project was built to reinforce a world-renowned methodology for financial balance:
 
-O projeto foi construído para reforçar uma metodologia de sucesso mundial para o equilíbrio financeiro:
+1. **Needs (50%):** Fundamental expenses for survival and maintenance.
+2. **Wants (30%):** Expenses focused on well-being, lifestyle, and leisure.
+3. **Savings and Future (20%):** What you set aside for your future self (investments and emergency fund).
 
-1. **Necessidades (50%):** Gastos fundamentais para sobrevivência e manutenção.
-2. **Desejos Pessoais (30%):** Gastos focados em bem-estar, estilo de vida e lazer.
-3. **Futuro e Reserva (20%):** O que você reserva para o seu "eu" do amanhã (investimentos e reserva de emergência).
+## ✨ Key Differentiators
 
----
+- **Clean Architecture:** Clear separation between UI components, API services, internationalization files, and TypeScript types.
+- **Adaptive UX:** Modern interface supporting **Light** and **Dark** themes alongside seamless real-time language and currency switching.
+- **Financial Education:** The system does not just list values; it suggests actions based on your current balance.
 
-## ✨ Diferenciais
+## 🏗️ Project Architecture
 
-- **Arquitetura Limpa:** Separação clara entre componentes de UI, serviços de API e tipos TypeScript.
-- **UX Adaptativa:** Interface moderna com suporte a temas **Light** e **Dark** para melhor conforto visual.
-- **Educação Financeira:** O sistema não apenas lista valores, mas sugere ações baseadas no balanço atual.
+The folder structure was organized to ensure modularity, facilitating code scalability and maintenance:
 
----
-
-## 🏗️ Arquitetura do Projeto
-
-A estrutura de pastas foi organizada para garantir modularidade, facilitando a escalabilidade e a manutenção do código:
-
-````text
+```text
 consumoInteligente/
-├── 📂 public/          # Ativos estáticos (ícones, favicons, etc.)
+├── 📂 public/          # Static assets (icons, favicons, etc.)
 └── 📂 src/
-    ├── 📂 components/  # Componentes reutilizáveis de UI e lógica parcial
-    |   | 📂 ui/  # componentes de interface criados com shadcn
-    │   | └── alert-dialog.tsx
-    |   | └── button.tsx
-    |   | └── dialog.tsx
-    |   | └── input.tsx
-    |   | └── label.tsx
-    |   |
-    |   ├── Chart.tsx           # Gráficos de visualização (Recharts)
-    │   ├── DashboradController.tsx #componente pai que orquestra estados de saída e entrada de dados
-    |   ├── Footer.tsx
-    |   ├── FormGasto.tsx       # Registro de novas despesas
-    |   ├── FormRendimentos.tsx # Registro de entradas financeiras
-    |   ├── Insights.tsx        # Painel de análise 50-30-20
-    |   ├── ListaGastos.tsx     # Histórico detalhado de despesas
-    │   ├── ListaRendimntos.tsx # Histórico detalhado de fontes de renda
-    │   ├── Nav.bar.tsx
-    |
-    ├── 📂 constantes/  # Valores fixos (Configuração das categorias)
+    ├── 📂 components/  # Reusable UI components and partial logic
+    │   ├── 📂 ui/      # Interface components created with shadcn
+    │   │   ├── alert-dialog.tsx
+    │   │   ├── button.tsx
+    │   │   ├── dialog.tsx
+    │   │   ├── input.tsx
+    │   │   └── label.tsx
+    │   ├── Chart.tsx               # Visualization charts (Recharts)
+    │   ├── DashboardController.tsx # Parent component orchestrating data states
+    │   ├── Footer.tsx
+    │   ├── FormGasto.tsx           # New expense registration
+    │   ├── FormRendimentos.tsx     # Financial income registration
+    │   ├── Insights.tsx            # 50-30-20 analysis panel
+    │   ├── ListaGastos.tsx         # Detailed expense history with edit/delete
+    │   ├── ListaRendimentos.tsx    # Detailed income sources history
+    │   └── Nav.bar.tsx
+    ├── 📂 constantes/  # Fixed values (Category configuration)
     │   └── categorias.ts
-    ├── 📂 service/     # Integração com API (Consumo dos endpoints)
+    ├── 📂 i18n/        # Internationalization configuration & translations
+    │   ├── index.ts    # i18next initialization setup
+    │   ├── de.json     # German translation dictionary
+    │   ├── en.json     # English translation dictionary
+    │   └── pt.json     # Portuguese translation dictionary
+    ├── 📂 service/     # API integration (Endpoint consumption)
     │   └── consumo.ts
-    ├── 📂 tipos/       # Definições de Interfaces TypeScript (Types)
+    ├── 📂 tipos/       # TypeScript interface definitions (Types)
     │   └── tipos.ts
-    ├── 📂 views/       # Páginas principais (Telas completas)
-    │   ├── Dashboard.tsx       # Tela principal de gestão
-    │   └── LoginPage.tsx       # Tela de autenticação
-    ├── App.tsx         # Componente raiz e estruturação
-    ├── main.tsx        # Ponto de entrada da aplicação
-    └── index.css       # Estilizações globais e variáveis de tema
-````
----
+    ├── 📂 views/       # Main pages (Full screens)
+    │   ├── Dashboard.tsx           # Main management screen
+    │   └── LoginPage.tsx           # Authentication screen
+    ├── App.tsx         # Root component and layout structure
+    ├── main.tsx        # Application entry point
+    └── index.css       # Global styles and theme variables
+```
+## 🔮 Future Implementations
 
-## 🔮 Implementações Futuras
+The project was conceived to be the foundation of a complete financial ecosystem. We plan to expand the platform's capabilities with:
 
-O projeto foi concebido para ser a base de um ecossistema financeiro completo. Planeamos expandir as capacidades da plataforma com:
+- **🔐 Real Authentication:** Implementing JWT (JSON Web Tokens) for a secure and persistent login system.
+- **📅 Short and Long-Term Goals:** A feature to create "objectives" (e.g., Trip, New Car) with a progress bar.
+- **📊 Report Exporting:** Generating PDF or Excel files with a monthly summary of expenses and income.
+- **🤖 AI Consultant:** An integrated chat that analyzes your expenses and suggests where you can save money to reach the 20% goal faster.
+- **🔔 Notifications:** An alert system to warn you when a pillar (e.g., 30% Wants) is close to its limit.
 
-- **🔐 Autenticação Real:** Implementação de JWT (JSON Web Tokens) para um sistema de login seguro e persistente.
-- **📅 Metas de Curto e Longo Prazo:** Funcionalidade para criar "objetivos" (ex: Viagem, Carro Novo) com barra de progresso.
-- **📊 Exportação de Relatórios:** Gerar ficheiros PDF ou Excel com o resumo mensal dos gastos e rendimentos.
-- **🤖 Consultor de IA:** Um chat integrado que analisa os seus gastos e sugere onde pode economizar para atingir a meta dos 20% mais rápido.
-- **🔔 Notificações:** Sistema de alertas para avisar quando um pilar (ex: Desejos 30%) estiver próximo do limite.
+## 💻 How to Run the Project
 
----
+- Prerequisites: Node.js installed
 
-## 💻 Como Rodar o Projeto
+1. **Clone the repository:**
 
-* Pré-requistos: ter o node.js instalado
-
-
-1. **Faça o clone do repositório:**
 ```bash
 git clone https://github.com/Ada-Finance/Consumo-Inteligente.git
 ```
 
-2. **Instale as dependências:**
+2. **Install the dependencies:**
 
 ```bash
 npm install
 ```
 
-3. **libs usadas:**
+3. **Libraries used:**
 
 ```bash
 npm install sonner
-```
-
-```bash
 npm install recharts
-```
-
-```bash
 npx shadcn@latest init
+npm install i18next react-i18next
 ```
 
-4. **Rodar o projeto:**
+4. **Run the project:**
 
 ```bash
 npm run dev
 ```
 
----
+## 👩‍💻 Developers
 
-## 👩‍💻 Desenvolvedoras
+This project was developed with dedication during a Hackathon at the end of a Front-end course at **AdaTech** by:
 
-Este projeto foi desenvolvido com dedicação em um Hackathon ao final de um curso de Front-end da **AdaTech** por:
-
-  * Vivian Santana [GitHub](https://github.com/Vivian-Santana) | [LinkedIn](https://www.linkedin.com/in/vivian-s-santana/)
-  * Jacqueline Mattisen [GitHub](https://github.com/JacMattisen) | [LinkedIn](https://www.linkedin.com/in/jacqueline-mattisen)
+- Vivian Santana [GitHub](https://github.com) | [LinkedIn](https://linkedin.com)
+- Jacqueline Mattisen [GitHub](https://github.com) | [LinkedIn](https://linkedin.com)
 ---
 ###
 
