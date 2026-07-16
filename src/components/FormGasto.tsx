@@ -29,7 +29,6 @@ export function FormGasto({ onGastoCriado }: FormGastoProps) {
       descricao,
       valor,
       categoria,
-      dataCriacao: Date.now(),
     };
 
     try {

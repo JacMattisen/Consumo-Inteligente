@@ -19,25 +19,26 @@ const Login = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: username, // O input de email está salvando na variável username
+          username: username, // O estado que guarda o que o usuário digitou
           password: password,
         }),
       });
 
-      const message = await response.text();
+      // texto da resposta (pq oToken JWT gigante)
+      const data = await response.text();
 
-      // Checa se a mensagem vinda do Spring Boot indica sucesso
-      if (message.includes("sucesso")) {
-        alert(message); // "Login efetuado com sucesso!"
-        navigate("/dashboard"); // Segue para o dashboard
+      if (response.ok && !data.startsWith("Erro")) {
+        // Salva o token na memória do navegador com o nome 'token'
+        localStorage.setItem("token", data);
+
+        alert("Login efetuado com sucesso!");
+        navigate("/dashboard"); // Vai para o painel principal
       } else {
-        alert(message); // Mostra o erro na tela: "Erro: Senha incorreta!" ou "Usuário não encontrado!"
+        alert(data || "E-mail ou senha incorretos.");
       }
     } catch (error) {
       console.error("Erro ao conectar com a API:", error);
-      alert(
-        "Não foi possível conectar ao servidor do Spring Boot. Verifique se ele está ligado!",
-      );
+      alert("Não foi possível conectar ao servidor.");
     }
   };
 

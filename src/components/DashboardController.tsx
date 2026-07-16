@@ -15,30 +15,59 @@ export default function DashboardController() {
   const [rendimentos, setRendimentos] = useState<Rendimento[]>([]);
   const { t } = useTranslation();
 
-  // Carregar gastos
-  const carregarGastos = useCallback(async () => {
-    try {
-      const dados = await getGastos();
-      setGastos(dados);
-    } catch (err) {
-      console.error("Erro ao buscar gastos:", err);
-    }
-  }, []);
+  const [versao, setVersao] = useState(0);
 
-  // Carregar rendimentos
-  const carregarRendimentos = useCallback(async () => {
+  const carregarDadosDoDashboard = useCallback(async () => {
     try {
-      const dados = await getRendimentos();
-      setRendimentos(dados);
+      const [dadosGastos, dadosRendimentos] = await Promise.all([
+        getGastos(),
+        getRendimentos(),
+      ]);
+
+      // Usar o operador spread [...] garante que o React entenda que a lista mudou!
+      setGastos([...dadosGastos]);
+      setRendimentos([...dadosRendimentos]);
+      setVersao((v) => v + 1); // Altera o controle para forçar a renderização dos componentes
     } catch (err) {
-      console.error("Erro ao buscar rendimento:", err);
+      console.error("Erro ao carregar dados do Dashboard:", err);
     }
   }, []);
 
   useEffect(() => {
-    carregarGastos();
-    carregarRendimentos();
-  }, [carregarGastos, carregarRendimentos]);
+    let ativo = true;
+
+    const buscarDados = async () => {
+      try {
+        const [dadosGastos, dadosRendimentos] = await Promise.all([
+          getGastos(),
+          getRendimentos(),
+        ]);
+
+        if (ativo) {
+          setGastos(dadosGastos);
+          setRendimentos(dadosRendimentos);
+        }
+      } catch (err) {
+        console.error("Erro ao inicializar dados:", err);
+      }
+    };
+
+    buscarDados();
+
+    // Função de limpeza (cleanup) para evitar vazamento de memória e cascata
+    return () => {
+      ativo = false;
+    };
+  }, []);
+
+  const recarregarDados = useCallback(() => {
+    return new Promise<void>((resolve) => {
+      setTimeout(async () => {
+        await carregarDadosDoDashboard();
+        resolve();
+      }, 150);
+    });
+  }, [carregarDadosDoDashboard]);
 
   return (
     <>
@@ -50,7 +79,7 @@ export default function DashboardController() {
             <BanknoteArrowDown size={20} /> {t("cadastrar_renda")}
           </h2>
 
-          <FormRendimentos onRendimentoCriado={carregarRendimentos} />
+          <FormRendimentos onRendimentoCriado={recarregarDados} />
         </div>
 
         {/* Card Novo Gasto */}
@@ -58,14 +87,14 @@ export default function DashboardController() {
           <h2 className="text-lg font-semibold mb-4 text-blue-600 dark:text-blue-400 flex items-center gap-2">
             <BanknoteArrowUp size={20} /> {t("novo_gasto")}
           </h2>
-          <FormGasto onGastoCriado={carregarGastos} />
+          <FormGasto onGastoCriado={recarregarDados} />
         </div>
       </div>
 
       {/* Gráfico e Insights */}
       <div className="grid grid-cols-1 lg:grid-cols-2 mt-8 gap-6 ">
         <div className="p-6 rounded-2xl border border-border bg-card shadow-sm flex flex-col items-center justify-center">
-          <GraficoConsumo gastos={gastos} />
+          <GraficoConsumo key={`grafico-${versao}`} gastos={gastos} />
         </div>
 
         <div className="p-6 rounded-2xl border border-border bg-card shadow-sm">
@@ -78,12 +107,12 @@ export default function DashboardController() {
         <div className="lg:col-span-1 p-6 rounded-2xl border border-border bg-card/60 shadow-sm">
           <ListaRendimentos
             rendimentos={rendimentos}
-            carregarDados={carregarRendimentos}
+            carregarDados={recarregarDados}
           />
         </div>
 
         <div className="lg:col-span-1 p-6 rounded-2xl border border-border bg-card/60 shadow-sm">
-          <ListaGastos gastos={gastos} carregarDados={carregarGastos} />
+          <ListaGastos gastos={gastos} carregarDados={recarregarDados} />
         </div>
       </div>
     </>

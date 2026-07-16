@@ -99,7 +99,7 @@ export function ListaGastos({ gastos, carregarDados }: ListaGastosProps) {
 
   const handleEdit = async (
     e: React.FormEvent<HTMLFormElement>,
-    id: string,
+    gastoOriginal: Gasto,
   ) => {
     e.preventDefault();
 
@@ -116,7 +116,10 @@ export function ListaGastos({ gastos, carregarDados }: ListaGastosProps) {
     }
 
     try {
-      await atualizarGasto(id, { valor: valorNumber });
+      await atualizarGasto(gastoOriginal.id, {
+        ...gastoOriginal,
+        valor: valorNumber,
+      });
 
       await carregarDados();
       toast.success(t("lista_gastos.sucesso_editar"));
@@ -184,7 +187,7 @@ export function ListaGastos({ gastos, carregarDados }: ListaGastosProps) {
                       </button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-sm bg-background border-border text-foreground">
-                      <form onSubmit={(e) => handleEdit(e, g.id)}>
+                      <form onSubmit={(e) => handleEdit(e, g)}>
                         <DialogHeader>
                           <DialogTitle>
                             {t("lista_gastos.editar_titulo")}
